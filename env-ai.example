@@ -1,0 +1,17 @@
+# AI Image Generation Services Configuration
+# Copy this file to .env.local and add your API keys
+
+# Choose your AI service (openai, stability, replicate, or mock)
+NEXT_PUBLIC_AI_SERVICE=mock
+
+# OpenAI DALL-E 3 (https://platform.openai.com/api-keys)
+NEXT_PUBLIC_OPENAI_API_KEY=your-openai-api-key-here
+
+# Stability AI (https://platform.stability.ai/)
+NEXT_PUBLIC_STABILITY_API_KEY=your-stability-api-key-here
+
+# Replicate (https://replicate.com/)
+NEXT_PUBLIC_REPLICATE_API_KEY=your-replicate-api-key-here
+
+# Note: Set NEXT_PUBLIC_AI_SERVICE to 'mock' for testing without API keys
+# The mock service generates placeholder images for demonstration

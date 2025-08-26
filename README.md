@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cold Harbor Website
 
-## Getting Started
+A modern ecommerce website built with Next.js, TypeScript, and Shopify's Storefront API. Features a fully functional shopping cart, product catalog, and seamless checkout experience.
 
-First, run the development server:
+## Features
+
+- 🛒 **Working Shopping Cart** - Add, remove, and update quantities
+- 🏪 **Shopify Integration** - Full product catalog from your Shopify store
+- 📱 **Responsive Design** - Mobile-first approach with Tailwind CSS
+- ⚡ **Fast Performance** - Built with Next.js 15 and Turbopack
+- 🔒 **Secure Checkout** - Direct integration with Shopify's checkout system
+
+## Prerequisites
+
+- Node.js 18+ 
+- A Shopify store with Storefront API access
+- Shopify Storefront API access token
+
+## Setup Instructions
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone https://github.com/BluechipLLC/Coldhabror.git
+cd Coldhabror
+npm install
+```
+
+### 2. Configure Shopify
+
+1. **Get your Shopify store domain** (e.g., `your-store.myshopify.com`)
+
+2. **Create a Storefront API access token:**
+   - Go to your Shopify admin
+   - Navigate to Settings > Apps and sales channels
+   - Click "Develop apps" > "Create an app"
+   - Configure Storefront API permissions
+   - Copy the access token
+
+3. **Set up environment variables:**
+   ```bash
+   cp env.example .env.local
+   ```
+   
+   Edit `.env.local` and add your credentials:
+   ```env
+   NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+   NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=your-storefront-access-token
+   ```
+
+### 3. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view your website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                    # Next.js app router pages
+│   ├── products/          # Products catalog page
+│   └── [...slug]/         # Dynamic routes for static content
+├── components/            # React components
+│   ├── CartDrawer.tsx     # Shopping cart sidebar
+│   ├── CartIcon.tsx       # Cart icon with item count
+│   ├── Header.tsx         # Site header with navigation
+│   └── ProductCard.tsx    # Individual product display
+├── contexts/              # React contexts
+│   └── CartContext.tsx    # Shopping cart state management
+├── lib/                   # Utility libraries
+│   └── shopify.ts         # Shopify API client and functions
+└── public/                # Static assets
+    └── site/              # Imported static HTML content
+```
 
-## Learn More
+## Shopify Integration
 
-To learn more about Next.js, take a look at the following resources:
+The website uses Shopify's Storefront API to:
+- Fetch products and variants
+- Manage shopping cart state
+- Handle checkout process
+- Display real-time inventory
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Key Functions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `fetchProducts()` - Get all products from your store
+- `addToCart()` - Add items to shopping cart
+- `updateCartItemQuantity()` - Modify item quantities
+- `removeFromCart()` - Remove items from cart
+- `createCart()` - Initialize new shopping cart
 
-## Deploy on Vercel
+## Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding New Pages
+Create new files in `src/app/` following Next.js 13+ app router conventions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Styling
+The project uses Tailwind CSS. Customize colors, spacing, and components in `tailwind.config.js`.
+
+### Shopify Products
+Products are automatically fetched from your Shopify store. To customize the display, modify `ProductCard.tsx`.
+
+## Deployment
+
+### Vercel (Recommended)
+1. Push to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
+
+### Other Platforms
+The project can be deployed to any platform that supports Next.js:
+- Netlify
+- AWS Amplify
+- DigitalOcean App Platform
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN` | Your Shopify store domain | Yes |
+| `NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN` | Storefront API access token | Yes |
+
+## Support
+
+For issues or questions:
+1. Check the Shopify documentation
+2. Review Next.js troubleshooting guides
+3. Open an issue in this repository
+
+## License
+
+This project is proprietary to Bluechip LLC.
