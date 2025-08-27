@@ -9,7 +9,7 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
-  const { state, removeItem, updateQuantity, clearCart, checkout } = useCart();
+  const { state, removeItem, updateQuantity, clearCart, checkout, getCartSubtotal, getCartTotal, getItemTotal } = useCart();
 
   // Prevent body scroll when cart is open
   React.useEffect(() => {
@@ -85,42 +85,45 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                     <div className="flex-1">
                       <h3 className="font-medium text-[#1A3A3A] opacity-85">{node.title}</h3>
                       <p className="text-sm text-[#1A3A3A]/70 opacity-85">{node.variant.title}</p>
+                      <p className="text-sm text-[#1A3A3A]/60 opacity-85">
+                        ${parseFloat(node.variant.price.amount).toFixed(2)} each
+                      </p>
                       <p className="text-sm font-semibold text-[#1A3A3A] opacity-85">
-                        ${parseFloat(node.variant.price.amount).toFixed(2)}
+                        Total: ${getItemTotal(node.id).toFixed(2)}
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                                              <button
-                          onClick={() => updateQuantity(node.id, Math.max(0, node.quantity - 1))}
-                          className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-150 text-[#1A3A3A] opacity-85 hover:opacity-100 cursor-pointer select-none transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1"
-                          onMouseDown={(e) => {
-                            e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
-                          }}
-                          onMouseUp={(e) => {
-                            e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          }}
-                        >
-                          -
-                        </button>
-                        <span className="w-8 text-center font-medium text-[#1A3A3A] opacity-85">{node.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(node.id, node.quantity + 1)}
-                          className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-150 text-[#1A3A3A] opacity-85 hover:opacity-100 cursor-pointer select-none transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1"
-                          onMouseDown={(e) => {
-                            e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
-                          }}
-                          onMouseUp={(e) => {
-                            e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          }}
-                        >
-                          +
-                        </button>
+                      <button
+                        onClick={() => updateQuantity(node.id, Math.max(0, node.quantity - 1))}
+                        className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-150 text-[#1A3A3A] opacity-85 hover:opacity-100 cursor-pointer select-none transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1"
+                        onMouseDown={(e) => {
+                          e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
+                        }}
+                        onMouseUp={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                        }}
+                      >
+                        -
+                      </button>
+                      <span className="w-8 text-center font-medium text-[#1A3A3A] opacity-85">{node.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(node.id, node.quantity + 1)}
+                        className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-150 text-[#1A3A3A] opacity-85 hover:opacity-100 cursor-pointer select-none transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1"
+                        onMouseDown={(e) => {
+                          e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
+                        }}
+                        onMouseUp={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                        }}
+                      >
+                        +
+                      </button>
                     </div>
                     <button
                       onClick={() => removeItem(node.id)}
@@ -151,12 +154,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
           {/* Footer */}
           {state.cart && state.cart.lines.edges.length > 0 && (
             <div className="border-t-2 border-[#1A3A3A]/20 p-6 space-y-4 bg-[#1A3A3A]/5">
-              <div className="flex justify-between items-center">
-                <span className="font-semibold text-[#1A3A3A] text-lg opacity-85">Cargo Value:</span>
-                <span className="font-semibold text-[#1A3A3A] text-xl opacity-85">
-                  ${parseFloat(state.cart.totalAmount.amount).toFixed(2)}
-                </span>
+              {/* Price Breakdown */}
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between items-center">
+                  <span className="text-[#1A3A3A]/70 opacity-85">Subtotal:</span>
+                  <span className="text-[#1A3A3A] opacity-85">${getCartSubtotal().toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[#1A3A3A]/70 opacity-85">Total:</span>
+                  <span className="font-semibold text-[#1A3A3A] text-lg opacity-85">
+                    ${getCartTotal().toFixed(2)}
+                  </span>
+                </div>
               </div>
+              
               <button
                 onClick={handleCheckout}
                 className="w-full bg-[#1A3A3A] text-white py-4 px-6 rounded-xl hover:bg-[#1A3A3A]/90 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 opacity-85 hover:opacity-100"

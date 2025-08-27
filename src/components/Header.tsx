@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import { CartDrawer } from './CartDrawer';
+import { useCart } from '@/contexts/CartContext';
 
 export const Header: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { getCartItemCount } = useCart();
 
   // Expose cart drawer open function globally
   React.useEffect(() => {
@@ -102,10 +104,12 @@ export const Header: React.FC = () => {
                     <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
                     </svg>
-                    {/* Cart Items Indicator */}
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#1A3A3A] text-white text-xs rounded-full flex items-center justify-center font-bold opacity-85 group-hover:opacity-100 transition-opacity duration-300">
-                      0
-                    </div>
+                    {/* Cart Items Indicator - Now shows real count */}
+                    {getCartItemCount() > 0 && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#1A3A3A] text-white text-xs rounded-full flex items-center justify-center font-bold opacity-85 group-hover:opacity-100 transition-opacity duration-300">
+                        {getCartItemCount()}
+                      </div>
+                    )}
                   </button>
                 </div>
               </div>
@@ -118,4 +122,4 @@ export const Header: React.FC = () => {
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
-};
+}
