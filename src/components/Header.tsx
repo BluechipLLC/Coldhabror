@@ -23,18 +23,16 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className="w-full">
+      <header className="w-full sticky top-0 z-50">
         {/* Top announcement bar */}
-        <div className="bg-[rgb(26,58,58)] text-white py-2 sm:py-3 relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
-          {/* Subtle texture overlay */}
-          <div className="absolute inset-0 bg-[url('/Logo/image.png')] bg-repeat opacity-10 mix-blend-mode-multiply"></div>
+        <div className="bg-[rgb(26,58,58)] text-white py-1.5 sm:py-2 relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
           
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center relative z-10">
+          <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center justify-center relative z-10">
             <div className="flex items-center gap-2 sm:gap-3">
               <img 
                 src="/Logo/Cold Harbo Logo-01.png" 
                 alt="Cold Harbor Sailboat" 
-                className="w-4 h-4 sm:w-5 sm:h-5 object-contain drop-shadow-sm"
+                className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
               />
               <span className="text-xs sm:text-sm font-medium text-center">
                 First Edition Cold Harbor available for preorder
@@ -48,14 +46,14 @@ export const Header: React.FC = () => {
           {/* Tan texture overlay */}
           <div className="absolute inset-0 bg-[url('/Logo/image.png')] bg-repeat opacity-20 mix-blend-mode-multiply"></div>
           
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex items-center h-16 sm:h-20 lg:h-24">
+          <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20 xl:h-22">
               {/* Logo and Brand - Left Justified */}
-              <div className="flex items-center flex-1">
+              <div className="flex items-center">
                 <img 
                   src="/Logo/Cold Harbo Logo-01.png" 
                   alt="Cold Harbor Logo" 
-                  className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain drop-shadow-lg"
+                  className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18 object-contain"
                 />
               </div>
 
@@ -83,7 +81,7 @@ export const Header: React.FC = () => {
                       style={{
                         fontFamily: 'var(--font-eb-garamond), serif',
                         fontWeight: 500,
-                        fontSize: 'clamp(0.875rem, 1.2vw, 1.125rem)'
+                        fontSize: 'clamp(0.875rem, 1.4vw, 1.375rem)'
                       }}
                     >
                       <span className="inline-block transition-all duration-300 ease-out will-change-transform group-hover:-translate-y-1 group-hover:drop-shadow-lg">

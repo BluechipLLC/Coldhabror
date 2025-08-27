@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface ProductCarouselProps {
@@ -44,6 +44,22 @@ export default function ProductCarousel({
 
   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Auto-rotate once after 5 seconds when page opens
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isAnimating) {
+        setImages((prev) => {
+          return prev.map((img) => ({
+            ...img,
+            position: (img.position + 1) % 3
+          }));
+        });
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []); // Remove isAnimating dependency so it only runs once
 
   const handleClick = (clickedImageId: string) => {
     if (isAnimating) return;
@@ -97,17 +113,17 @@ export default function ProductCarousel({
       // Left back position - behind and to the left, cropped
       style.width = `${backImageWidth}px`;
       style.zIndex = 20;
-      const offsetX = Math.max(200, (frontImageWidth - backImageWidth) / 2 + 80);
-      style.transform = `translate(calc(-50% - ${offsetX}px), calc(-50% + 40px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
-      style.opacity = "0.85";
+      const offsetX = Math.max(240, (frontImageWidth - backImageWidth) / 2 + 100);
+      style.transform = `translate(calc(-50% - ${offsetX}px), calc(-50% + 50px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
+      style.opacity = "0.98";
       style.objectFit = "cover";
     } else {
       // Right back position - behind and to the right, cropped
       style.width = `${backImageWidth}px`;
       style.zIndex = 20;
-      const offsetX = Math.max(200, (frontImageWidth - backImageWidth) / 2 + 80);
-      style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + 40px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
-      style.opacity = "0.85";
+      const offsetX = Math.max(240, (frontImageWidth - backImageWidth) / 2 + 100);
+      style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + 50px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
+      style.opacity = "0.98";
       style.objectFit = "cover";
     }
     

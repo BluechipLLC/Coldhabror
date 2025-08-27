@@ -5,7 +5,7 @@ import ProductCarousel from "./ProductCarousel";
 
 export default function HeroSection() {
   return (
-    <section className="w-full min-h-[90vh] relative overflow-hidden">
+    <section className="w-full min-h-[100vh] relative overflow-hidden">
       {/* Background with paper texture */}
       <div className="absolute inset-0 bg-[color:var(--paper-color)]" />
       
@@ -14,27 +14,28 @@ export default function HeroSection() {
         <img 
           src="/Logo/Cold Harbo Logo-11.png" 
           alt="Cold Harbor Coffee Company" 
-          className="w-48 h-auto sm:w-56 md:w-64 lg:w-72 xl:w-80 2xl:w-96 object-contain"
+          className="w-80 h-auto sm:w-96 md:w-[28rem] lg:w-[32rem] xl:w-[36rem] 2xl:w-[40rem] object-contain"
         />
       </div>
 
       {/* Main content container with 190px gap from logo */}
-      <div className="relative z-10 max-w-7xl mx-auto px-[clamp(1rem,4vw,3rem)] pt-[250px] pb-[clamp(2rem,6vw,4rem)]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-[70vh]">
+      <div className="relative z-10 max-w-7xl mx-auto px-[clamp(1rem,4vw,3rem)] pt-[240px] pb-[clamp(1.5rem,4vw,3rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center min-h-[70vh]">
           
           {/* Left side - Text and CTA with artwork background */}
-          <div className="text-center lg:text-left relative">
-            {/* Artwork background stuck to hero text */}
-            <div className="absolute inset-0 flex items-center justify-start opacity-45 -z-10">
+          <div className="text-center lg:text-left relative lg:pl-8">
+            {/* Artwork background stuck to hero text - Made Bigger */}
+            <div className="absolute inset-0 flex items-center justify-start opacity-60 -z-10">
               <img 
                 src="/Scrimshaw/artwork-01.webp" 
                 alt="Coastal Artwork" 
-                className="h-full w-auto object-contain object-left opacity-45
-                           sm:h-[80vh] sm:w-auto
-                           md:h-[85vh] md:w-auto
-                           lg:h-[90vh] lg:w-auto
-                           xl:h-[95vh] xl:w-auto
-                           2xl:h-[100vh] 2xl:w-auto"
+                className="h-full w-auto object-contain object-left opacity-60
+                           sm:h-[90vh] sm:w-auto
+                           md:h-[95vh] md:w-auto
+                           lg:h-[100vh] lg:w-auto
+                           xl:h-[105vh] xl:w-auto
+                           2xl:h-[110vh] 2xl:w-auto
+                           transform scale-125 lg:scale-150"
               />
             </div>
             
@@ -42,16 +43,16 @@ export default function HeroSection() {
               fontFamily: 'var(--font-eb-garamond), serif',
               fontWeight: 700,
               fontStyle: 'normal',
-              fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+              fontSize: 'clamp(3.5rem, 9vw, 6rem)',
               lineHeight: '0.9'
             }}>
               Premium Coffee
               <span className="block text-[#1A3A3A]/85 italic">Crafted with Care</span>
             </h1>
             
-            <p className="text-[#1A3A3A]/85 mb-8 text-lg" style={{
+            <p className="text-[#1A3A3A]/85 mb-8 text-xl font-medium" style={{
               fontFamily: 'var(--font-eb-garamond), serif',
-              fontWeight: 400
+              fontWeight: 500
             }}>
               Discover our handcrafted blends
             </p>
@@ -82,7 +83,7 @@ export default function HeroSection() {
 
           {/* Right side - Interactive Product Carousel */}
           <div className="relative flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-2xl h-[700px]">
+            <div className="relative w-full max-w-2xl h-[700px] lg:pr-8">
               <ProductCarousel 
                 frontImageWidth={400}
                 backImageWidth={320}
@@ -96,18 +97,18 @@ export default function HeroSection() {
       </div>
 
       {/* Green divider bar 40px below hero section */}
-      <div className="relative z-10 w-full h-20 bg-[#1A3A3A] mt-[-20px]"></div>
+      <div className="relative z-10 w-full h-32 bg-[#1A3A3A] mt-[-10px]"></div>
 
       {/* Three-section feature display with inset depth */}
-      <div className="bg-white py-20 relative">
+      <div className="bg-white py-16 relative">
         {/* Top shadow for inset effect */}
         <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-black/10 to-transparent pointer-events-none"></div>
         
         {/* Bottom shadow for inset effect */}
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
         
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+        <div className="max-w-7xl mx-auto px-[clamp(1rem,4vw,3rem)] relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             
             {/* Left Section: No Added Flavoring */}
             <div className="text-center">
@@ -193,77 +194,102 @@ export default function HeroSection() {
 
       {/* Two-section layout below the feature display */}
       <div className="bg-[#F5F5F0] py-20">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="w-full px-[clamp(1rem,4vw,3rem)]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
             {/* Left Column - About Section */}
-            <div className="bg-[#1A3A3A] rounded-3xl p-12 text-white">
-              <h2 className="text-4xl font-bold mb-8 tracking-tight leading-tight" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 700
-              }}>
-                About
-              </h2>
-              {/* Content placeholder for future About section */}
+            <div className="bg-[#1A3A3A] rounded-3xl p-16 text-white relative overflow-hidden">
+              {/* Background texture */}
+              <div className="absolute inset-0 bg-[url('/Scrimshaw/artwork-02.webp')] bg-cover bg-center opacity-10"></div>
+              
+              <div className="relative z-10">
+                <h2 className="text-5xl font-bold mb-8 tracking-tight leading-tight" style={{ 
+                  fontFamily: 'var(--font-eb-garamond), serif',
+                  fontWeight: 700
+                }}>
+                  Our Story
+                </h2>
+                
+                <div className="space-y-6 text-lg leading-relaxed">
+                  <p>
+                    Born from the rugged beauty of the Pacific Northwest coast, Cold Harbor Coffee emerged from a simple truth: 
+                    morning coffee needs to be as bold as the sea that shapes our shores.
+                  </p>
+                  
+                  <p>
+                    We're not just coffee roasters—we're morning people. The kind who know that 4 AM fog has a taste, 
+                    that dock pilings creak in harmony with the tide, and that the best conversations happen before sunrise.
+                  </p>
+                  
+                  <p>
+                    Every bean we roast carries the weight of coastal tradition, every blend crafted to cut through 
+                    the morning chill and wake you up like a foghorn cutting through the mist.
+                  </p>
+                </div>
+                
+                <div className="mt-10">
+                  <a 
+                    href="/about" 
+                    className="inline-flex items-center px-8 py-4 bg-white text-[#1A3A3A] rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#F5F5F0] hover:scale-105"
+                    style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+                  >
+                    Read Our Full Story
+                    <svg className="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/* Right Column - Newsletter Signup */}
-            <div className="bg-white rounded-3xl p-12 relative overflow-hidden">
-              <h2 className="text-4xl font-bold text-[#1A3A3A] mb-6 tracking-tight leading-tight" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 700
-              }}>
-                Dock at the Harbor
-              </h2>
+            <div className="bg-white rounded-3xl p-16 relative overflow-hidden">
+              {/* Background artwork */}
+              <div className="absolute inset-0 bg-[url('/Scrimshaw/BOUY.webp')] bg-contain bg-no-repeat bg-right-bottom opacity-5"></div>
               
-              <p className="text-[#1A3A3A]/90 mb-8 text-lg leading-relaxed" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 400
-              }}>
-                Sign-up for our email newsletter for future deals and updates!
-              </p>
-              
-              {/* Newsletter Form */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                <input
-                  type="email"
-                  placeholder="name@email.com"
-                  className="flex-1 px-6 py-4 border-2 border-[#1A3A3A]/20 rounded-xl text-[#1A3A3A] placeholder-[#1A3A3A]/60 focus:outline-none focus:border-[#1A3A3A] transition-colors duration-300 bg-[#F5F5F0]"
-                  style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
-                />
-                <button className="px-8 py-4 bg-[#1A3A3A] text-white rounded-xl font-semibold transition-all duration-100 transform active:scale-90 active:translate-y-2 hover:scale-102 hover:-translate-y-1 hover:shadow-xl shadow-lg opacity-85 hover:opacity-100 whitespace-nowrap cursor-pointer select-none border-2 border-[#1A3A3A] hover:border-[#1A3A3A]/80 active:border-[#1A3A3A]/60" style={{ 
-                  fontFamily: 'var(--font-eb-garamond), serif'
-                }}
-                onMouseDown={(e) => {
-                  e.currentTarget.style.transform = 'scale(0.90) translateY(8px)';
-                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)';
-                }}
-                onMouseUp={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+              <div className="relative z-10">
+                <h2 className="text-5xl font-bold text-[#1A3A3A] mb-6 tracking-tight leading-tight" style={{ 
+                  fontFamily: 'var(--font-eb-garamond), serif',
+                  fontWeight: 700
                 }}>
-                  Subscribe
-                </button>
-              </div>
-              
-              <p className="text-[#1A3A3A]/80 text-base leading-relaxed" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 400
-              }}>
-                Sign-up to receive 10% off your first order!
-              </p>
-              
-              {/* Buoy Scrimshaw Artwork */}
-              <div className="absolute bottom-6 right-6 w-24 h-24 opacity-60">
-                <img 
-                  src="/Scrimshaw/BOUY.webp" 
-                  alt="Nautical Buoy" 
-                  className="w-full h-full object-contain"
-                />
+                  Dock at the Harbor
+                </h2>
+                
+                <p className="text-[#1A3A3A]/90 mb-8 text-xl leading-relaxed" style={{ 
+                  fontFamily: 'var(--font-eb-garamond), serif',
+                  fontWeight: 400
+                }}>
+                  Join our coastal community and be the first to know about new releases, exclusive offers, and stories from the harbor.
+                </p>
+                
+                {/* Newsletter Form */}
+                <div className="space-y-6 mb-8">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <input
+                      type="text"
+                      placeholder="First Name"
+                      className="flex-1 px-6 py-4 border-2 border-[#1A3A3A]/20 rounded-xl text-[#1A3A3A] placeholder-[#1A3A3A]/60 focus:outline-none focus:border-[#1A3A3A] transition-colors duration-300 bg-[#F5F5F0]"
+                      style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      className="flex-1 px-6 py-4 border-2 border-[#1A3A3A]/20 rounded-xl text-[#1A3A3A] placeholder-[#1A3A3A]/60 focus:outline-none focus:border-[#1A3A3A] transition-colors duration-300 bg-[#F5F5F0]"
+                      style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+                    />
+                  </div>
+                  
+                  <button className="w-full px-8 py-5 bg-[#1A3A3A] text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-[1.02] active:scale-98" style={{ 
+                    fontFamily: 'var(--font-eb-garamond), serif'
+                  }}>
+                    Subscribe to the Harbor
+                  </button>
+                </div>
+                
+                <div className="flex items-center justify-between text-sm text-[#1A3A3A]/80">
+                  <span>Get 10% off your first order</span>
+                  <span>No spam, just coffee talk</span>
+                </div>
               </div>
             </div>
 

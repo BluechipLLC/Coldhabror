@@ -57,7 +57,9 @@ export default function ProductsPage() {
     return (
       <div className="min-h-screen bg-[color:var(--paper-color)] flex items-center justify-center">
         <div className="text-center">
-          <div className="text-green text-2xl mb-4">Loading products...</div>
+          <div className="text-[#1A3A3A] text-2xl mb-4" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+            Loading our coffee collection...
+          </div>
         </div>
       </div>
     );
@@ -68,7 +70,7 @@ export default function ProductsPage() {
       <div className="min-h-screen bg-[color:var(--paper-color)] flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 text-xl mb-4">{error}</p>
-          <div className="text-tan text-lg mb-4">
+          <div className="text-[#1A3A3A]/80 text-lg mb-4">
             {error.includes('not configured') && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-left">
                 <h3 className="text-yellow-800 font-semibold mb-2">Configuration Required:</h3>
@@ -84,7 +86,8 @@ export default function ProductsPage() {
           </div>
           <button
             onClick={() => window.location.reload()}
-            className="bg-green text-white px-6 py-3 rounded-lg hover:opacity-80 transition-opacity"
+            className="bg-[#1A3A3A] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#1A3A3A]/90 transition-all duration-300"
+            style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
           >
             Try Again
           </button>
@@ -95,74 +98,136 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-[color:var(--paper-color)]">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="text-center mb-16">
-          <h1 className="text-green text-5xl lg:text-6xl font-bold mb-6" style={{
-            fontFamily: 'var(--font-eb-garamond), serif'
-          }}>
-            Our Coffee Blends
-          </h1>
-          <p className="text-tan text-xl max-w-3xl mx-auto leading-relaxed" style={{
-            fontFamily: 'var(--font-eb-garamond), serif'
-          }}>
-            Discover our premium selection of coffee blends and roasts, carefully crafted for the perfect cup.
-          </p>
+      {/* Hero Section */}
+      <div className="bg-[#1A3A3A] text-white py-20 relative overflow-hidden">
+        {/* Background texture */}
+        <div className="absolute inset-0 bg-[url('/Scrimshaw/artwork-03.webp')] bg-cover bg-center opacity-10"></div>
+        
+        <div className="w-full px-[clamp(1rem,4vw,3rem)] relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-6xl lg:text-7xl font-bold mb-8 tracking-tight leading-tight" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontWeight: 700
+            }}>
+              Our Coffee Collection
+            </h1>
+            <p className="text-xl lg:text-2xl leading-relaxed opacity-90" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontWeight: 400
+            }}>
+              Three distinct blends, each crafted with the same coastal precision. 
+              No added flavors, no shortcuts—just coffee that cuts through the morning fog.
+            </p>
+          </div>
         </div>
+      </div>
 
-        {/* Debug Info */}
-        {debugInfo && (
-          <div className="mb-8 p-4 bg-gray-100 rounded-lg">
-            <h3 className="text-green font-semibold mb-2">Debug Info:</h3>
-            <p className="text-tan">{debugInfo}</p>
-          </div>
-        )}
+      {/* Products Grid */}
+      <div className="py-20">
+        <div className="w-full px-[clamp(1rem,4vw,3rem)]">
+          {/* Debug Info */}
+          {debugInfo && (
+            <div className="mb-12 p-6 bg-[#F5F5F0] rounded-2xl border border-[#1A3A3A]/10">
+              <h3 className="text-[#1A3A3A] font-semibold mb-2" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                Debug Info:
+              </h3>
+              <p className="text-[#1A3A3A]/80">{debugInfo}</p>
+            </div>
+          )}
 
-        {products.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="relative">
-                  <img 
-                    src={product.images.edges[0]?.node.url} 
-                    alt={product.images.edges[0]?.node.altText || product.title}
-                    className="w-full h-64 object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-green text-2xl font-bold mb-3" style={{
-                    fontFamily: 'var(--font-eb-garamond), serif'
-                  }}>
-                    {product.title}
-                  </h3>
-                  <p className="text-tan mb-4 leading-relaxed" style={{
-                    fontFamily: 'var(--font-eb-garamond), serif'
-                  }}>
-                    {product.description}
-                  </p>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-green text-2xl font-semibold">
-                      ${product.priceRange.minVariantPrice.amount}
-                    </span>
-                    <span className="text-tan text-sm">12 oz Bag</span>
+          {products.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {products.map((product) => (
+                <div key={product.id} className="group">
+                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02]">
+                    <div className="relative overflow-hidden">
+                      <img 
+                        src={product.images.edges[0]?.node.url} 
+                        alt={product.images.edges[0]?.node.altText || product.title}
+                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    
+                    <div className="p-8">
+                      <h3 className="text-[#1A3A3A] text-2xl font-bold mb-4 tracking-tight" style={{
+                        fontFamily: 'var(--font-eb-garamond), serif',
+                        fontWeight: 700
+                      }}>
+                        {product.title}
+                      </h3>
+                      
+                      <p className="text-[#1A3A3A]/80 mb-6 leading-relaxed text-lg" style={{
+                        fontFamily: 'var(--font-eb-garamond), serif',
+                        fontWeight: 400
+                      }}>
+                        {product.description}
+                      </p>
+                      
+                      <div className="flex items-center justify-between mb-8">
+                        <span className="text-[#1A3A3A] text-3xl font-bold">
+                          ${product.priceRange.minVariantPrice.amount}
+                        </span>
+                        <span className="text-[#1A3A3A]/60 text-lg font-medium">12 oz Bag</span>
+                      </div>
+                      
+                      <Link
+                        href={`/products/${product.handle}`}
+                        className="w-full bg-[#1A3A3A] text-white py-4 px-8 rounded-xl text-center font-semibold text-lg transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-[1.02] active:scale-98 block"
+                        style={{
+                          fontFamily: 'var(--font-eb-garamond), serif'
+                        }}
+                      >
+                        View Details
+                      </Link>
+                    </div>
                   </div>
-                  <Link
-                    href={`/products/${product.handle}`}
-                    className="w-full bg-green text-white py-3 px-6 rounded-lg text-center font-semibold hover:bg-green-700 transition-colors block analog-cta"
-                    style={{
-                      fontFamily: 'var(--font-eb-garamond), serif'
-                    }}
-                  >
-                    View Details
-                  </Link>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <div className="bg-white rounded-3xl p-16 max-w-2xl mx-auto">
+                <h3 className="text-[#1A3A3A] text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                  No Products Found
+                </h3>
+                <p className="text-[#1A3A3A]/80 text-lg leading-relaxed" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                  We're currently preparing our coffee collection. Check back soon for our premium blends.
+                </p>
               </div>
-            ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Call to Action Section */}
+      <div className="bg-[#F5F5F0] py-20">
+        <div className="w-full px-[clamp(1rem,4vw,3rem)]">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#1A3A3A] mb-6 tracking-tight" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontWeight: 700
+            }}>
+              Ready to Experience Coastal Coffee?
+            </h2>
+            <p className="text-[#1A3A3A]/80 text-xl leading-relaxed mb-10" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontWeight: 400
+            }}>
+              Each blend tells a story of the coast. Choose your morning companion.
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center px-10 py-5 bg-[#1A3A3A] text-white rounded-xl font-semibold text-xl transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-105"
+              style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+            >
+              Back to Harbor
+              <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-tan text-xl">No products found.</p>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -124,7 +124,9 @@ export default function DynamicProductPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[color:var(--paper-color)] flex items-center justify-center">
-        <div className="text-green text-2xl">Loading product...</div>
+        <div className="text-[#1A3A3A] text-2xl" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+          Loading product details...
+        </div>
       </div>
     );
   }
@@ -134,7 +136,7 @@ export default function DynamicProductPage() {
       <div className="min-h-screen bg-[color:var(--paper-color)] flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 text-xl mb-4">{error}</p>
-          <div className="text-tan text-lg mb-4">
+          <div className="text-[#1A3A3A]/80 text-lg mb-4">
             {error.includes('not configured') && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-left">
                 <h3 className="text-yellow-800 font-semibold mb-2">Configuration Required:</h3>
@@ -150,7 +152,8 @@ export default function DynamicProductPage() {
           </div>
           <button
             onClick={() => router.back()}
-            className="bg-green text-white px-6 py-3 rounded-lg hover:opacity-80 transition-opacity"
+            className="bg-[#1A3A3A] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#1A3A3A]/90 transition-all duration-300"
+            style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
           >
             Go Back
           </button>
@@ -162,108 +165,188 @@ export default function DynamicProductPage() {
   if (!product) {
     return (
       <div className="min-h-screen bg-[color:var(--paper-color)] flex items-center justify-center">
-        <div className="text-green text-2xl">Product not found</div>
+        <div className="text-[#1A3A3A] text-2xl" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+          Product not found
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[color:var(--paper-color)]">
-      {/* Header */}
-      <div className="bg-green text-white py-4">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* Header Navigation */}
+      <div className="bg-[#1A3A3A] text-white py-6 relative overflow-hidden">
+        {/* Background texture */}
+        <div className="absolute inset-0 bg-[url('/Scrimshaw/artwork-01.webp')] bg-cover bg-center opacity-10"></div>
+        
+        <div className="w-full px-[clamp(1rem,4vw,3rem)] relative z-10">
           <button 
             onClick={() => router.back()}
-            className="text-white hover:opacity-80 transition-opacity"
+            className="inline-flex items-center text-white hover:text-white/80 transition-colors text-lg font-medium"
+            style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
           >
-            ← Back to Products
+            <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Collection
           </button>
         </div>
       </div>
 
       {/* Product Content */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          
-          {/* Product Image */}
-          <div className="relative">
-            <img 
-              src={product.images.edges[0]?.node.url} 
-              alt={product.images.edges[0]?.node.altText || product.title}
-              className="w-full h-auto rounded-lg shadow-lg object-cover"
-            />
-          </div>
-
-          {/* Product Details */}
-          <div className="space-y-6">
-            <h1 className="text-green text-4xl lg:text-5xl font-bold" style={{
-              fontFamily: 'var(--font-eb-garamond), serif'
-            }}>
-              {product.title}
-            </h1>
+      <div className="py-20">
+        <div className="w-full px-[clamp(1rem,4vw,3rem)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             
-            <div className="text-3xl text-green font-semibold">
-              ${product.priceRange.minVariantPrice.amount}
-            </div>
-            
-            <p className="text-tan text-lg leading-relaxed" style={{
-              fontFamily: 'var(--font-eb-garamond), serif'
-            }}>
-              {product.description}
-            </p>
-
-            {/* Product Features */}
-            <div className="space-y-3">
-              <h3 className="text-green text-xl font-semibold">Features:</h3>
-              <ul className="text-tan space-y-2">
-                <li>• Premium quality coffee blend</li>
-                <li>• Fresh roasted and ground</li>
-                <li>• Perfect for any time of day</li>
-                <li>• 12 oz bag</li>
-                <li>• Sustainably sourced beans</li>
-              </ul>
-            </div>
-
-            {/* Quantity Selector */}
-            <div className="flex items-center space-x-4">
-              <label className="text-green font-semibold">Quantity:</label>
-              <select 
-                value={quantity} 
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                className="border border-green rounded px-3 py-2 text-green bg-white"
-              >
-                {[1, 2, 3, 4, 5].map(num => (
-                  <option key={num} value={num}>{num}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              disabled={isAddingToCart || state.loading}
-              className="w-full bg-green text-white py-4 px-8 rounded-lg text-xl font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed analog-cta"
-              style={{
-                fontFamily: 'var(--font-eb-garamond), serif'
-              }}
-            >
-              {isAddingToCart ? 'Adding to Cart...' : 'Add to Cart - $' + product.priceRange.minVariantPrice.amount}
-            </button>
-
-            {/* Cart Status */}
-            {state.cart && (
-              <div className="text-sm text-tan">
-                <p>Items in cart: {state.cart.totalQuantity}</p>
-                <p>Total: ${state.cart.totalAmount.amount}</p>
+            {/* Product Image */}
+            <div className="relative group">
+              <div className="bg-white rounded-3xl p-8 shadow-lg">
+                <img 
+                  src={product.images.edges[0]?.node.url} 
+                  alt={product.images.edges[0]?.node.altText || product.title}
+                  className="w-full h-auto rounded-2xl object-cover group-hover:scale-105 transition-transform duration-700"
+                />
               </div>
-            )}
-
-            {/* Additional Info */}
-            <div className="text-sm text-tan space-y-2">
-              <p>• Free shipping on orders over $50</p>
-              <p>• Ships within 1-2 business days</p>
-              <p>• 30-day satisfaction guarantee</p>
             </div>
+
+            {/* Product Details */}
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-[#1A3A3A] text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight" style={{
+                  fontFamily: 'var(--font-eb-garamond), serif',
+                  fontWeight: 700
+                }}>
+                  {product.title}
+                </h1>
+                
+                <div className="text-4xl text-[#1A3A3A] font-bold mb-6">
+                  ${product.priceRange.minVariantPrice.amount}
+                </div>
+                
+                <p className="text-[#1A3A3A]/80 text-xl leading-relaxed" style={{
+                  fontFamily: 'var(--font-eb-garamond), serif',
+                  fontWeight: 400
+                }}>
+                  {product.description}
+                </p>
+              </div>
+
+              {/* Product Features */}
+              <div className="bg-[#F5F5F0] rounded-2xl p-8">
+                <h3 className="text-[#1A3A3A] text-2xl font-bold mb-6" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                  What Makes This Blend Special
+                </h3>
+                <ul className="text-[#1A3A3A]/80 space-y-4 text-lg">
+                  <li className="flex items-start">
+                    <span className="text-[#1A3A3A] mr-3 text-xl">•</span>
+                    <span>Premium quality coffee beans, carefully selected and roasted</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#1A3A3A] mr-3 text-xl">•</span>
+                    <span>Fresh roasted and ground for maximum flavor</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#1A3A3A] mr-3 text-xl">•</span>
+                    <span>Perfect for any time of day - morning, noon, or night</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#1A3A3A] mr-3 text-xl">•</span>
+                    <span>12 oz bag - enough for multiple cups of excellence</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#1A3A3A] mr-3 text-xl">•</span>
+                    <span>Sustainably sourced beans from ethical growers</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Quantity Selector */}
+              <div className="bg-white rounded-2xl p-8 border border-[#1A3A3A]/10">
+                <div className="flex items-center justify-between mb-6">
+                  <label className="text-[#1A3A3A] text-xl font-semibold" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                    Quantity:
+                  </label>
+                  <select 
+                    value={quantity} 
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    className="border-2 border-[#1A3A3A]/20 rounded-xl px-6 py-3 text-[#1A3A3A] bg-[#F5F5F0] focus:outline-none focus:border-[#1A3A3A] transition-colors duration-300 text-lg"
+                    style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+                  >
+                    {[1, 2, 3, 4, 5].map(num => (
+                      <option key={num} value={num}>{num}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Add to Cart Button */}
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isAddingToCart || state.loading}
+                  className="w-full bg-[#1A3A3A] text-white py-5 px-8 rounded-xl text-2xl font-semibold transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-[1.02] active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{
+                    fontFamily: 'var(--font-eb-garamond), serif'
+                  }}
+                >
+                  {isAddingToCart ? 'Adding to Cart...' : `Add to Cart - $${product.priceRange.minVariantPrice.amount}`}
+                </button>
+              </div>
+
+              {/* Cart Status */}
+              {state.cart && (
+                <div className="bg-[#F5F5F0] rounded-2xl p-6 text-center">
+                  <h4 className="text-[#1A3A3A] font-semibold mb-3" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                    Your Cart
+                  </h4>
+                  <div className="text-[#1A3A3A]/80 space-y-1">
+                    <p>Items: {state.cart.totalQuantity}</p>
+                    <p className="text-lg font-semibold">Total: ${state.cart.totalAmount.amount}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Additional Info */}
+              <div className="bg-white rounded-2xl p-8 border border-[#1A3A3A]/10">
+                <h4 className="text-[#1A3A3A] text-xl font-semibold mb-4" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+                  Shipping & Returns
+                </h4>
+                <div className="text-[#1A3A3A]/80 space-y-3 text-lg">
+                  <p>• Free shipping on orders over $50</p>
+                  <p>• Ships within 1-2 business days</p>
+                  <p>• 30-day satisfaction guarantee</p>
+                  <p>• Secure checkout and fast delivery</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Products CTA */}
+      <div className="bg-[#F5F5F0] py-20">
+        <div className="w-full px-[clamp(1rem,4vw,3rem)]">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#1A3A3A] mb-6 tracking-tight" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontWeight: 700
+            }}>
+              Explore Our Full Collection
+            </h2>
+            <p className="text-[#1A3A3A]/80 text-xl leading-relaxed mb-10" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontWeight: 400
+            }}>
+              Each blend has its own story. Discover the perfect coffee for your morning ritual.
+            </p>
+            <button
+              onClick={() => router.push('/products')}
+              className="inline-flex items-center px-10 py-5 bg-[#1A3A3A] text-white rounded-xl font-semibold text-xl transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-105"
+              style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+            >
+              View All Blends
+              <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
