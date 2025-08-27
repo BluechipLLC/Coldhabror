@@ -37,6 +37,7 @@ interface CartContextType {
   updateQuantity: (lineItemId: string, quantity: number) => Promise<void>;
   clearCart: () => void;
   getCartItemCount: () => number;
+  checkout: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -75,6 +76,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
           dispatch({ type: 'SET_CART', payload: newCart });
         }
       } catch (error) {
+        console.error('Cart initialization error:', error);
         dispatch({ type: 'SET_ERROR', payload: 'Failed to initialize cart' });
       }
     };
@@ -90,6 +92,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       const updatedCart = await addToCart(state.cart.id, variantId, quantity);
       dispatch({ type: 'SET_CART', payload: updatedCart });
     } catch (error) {
+      console.error('Error adding item:', error);
       dispatch({ type: 'SET_ERROR', payload: 'Failed to add item to cart' });
     }
   };
@@ -127,6 +130,15 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     return state.cart?.totalQuantity || 0;
   };
 
+  const checkout = () => {
+    if (state.cart?.checkoutUrl) {
+      // Redirect to Shopify checkout
+      window.location.href = state.cart.checkoutUrl;
+    } else {
+      console.error('No checkout URL available');
+    }
+  };
+
   const value: CartContextType = {
     state,
     addItem,
@@ -134,6 +146,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     updateQuantity,
     clearCart,
     getCartItemCount,
+    checkout,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

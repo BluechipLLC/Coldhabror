@@ -55,7 +55,6 @@ export default function HeroSection() {
               <ProductCarousel 
                 frontImageWidth={280}
                 backImageWidth={220}
-                imageSpacing={20}
                 rotationSpeed={0.6}
                 frontHoverScale={1.05}
                 backHoverScale={1.02}

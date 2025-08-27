@@ -7,6 +7,19 @@ import { CartDrawer } from './CartDrawer';
 export const Header: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Expose cart drawer open function globally
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.openCartDrawer = () => setIsCartOpen(true);
+    }
+    
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.openCartDrawer = undefined;
+      }
+    };
+  }, []);
+
   return (
     <>
       <header className="w-full">

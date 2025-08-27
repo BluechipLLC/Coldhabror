@@ -62,7 +62,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 const variant = product.variants.edges.find(
                   edge => edge.node.id === e.target.value
                 )?.node;
-                setSelectedVariant(variant);
+                if (variant) {
+                  setSelectedVariant(variant);
+                }
               }}
               className="border border-gray-300 rounded px-2 py-1 text-sm"
             >

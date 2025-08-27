@@ -26,7 +26,7 @@ export default function DynamicPage({ params }: PageProps) {
     return (
       <div>
         <h1>Cold Harbor Website</h1>
-        <p>Error loading content: {error.message}</p>
+        <p>Error loading content: {error instanceof Error ? error.message : 'Unknown error'}</p>
       </div>
     );
   }

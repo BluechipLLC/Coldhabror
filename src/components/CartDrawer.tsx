@@ -9,14 +9,12 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
-  const { state, removeItem, updateQuantity, clearCart } = useCart();
+  const { state, removeItem, updateQuantity, clearCart, checkout } = useCart();
 
   if (!isOpen) return null;
 
   const handleCheckout = () => {
-    if (state.cart?.checkoutUrl) {
-      window.location.href = state.cart.checkoutUrl;
-    }
+    checkout();
   };
 
   return (

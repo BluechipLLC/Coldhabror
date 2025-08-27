@@ -5,7 +5,7 @@
   --foreground: rgb(26, 58, 58);
   --ink-green: rgb(26, 58, 58);
   --ink-tan: #6b5f52;
-  --paper-image: url('/paper.jpg');
+  --paper-image: none;
   --paper-color: #efe9dc;
 }
 
@@ -35,6 +35,11 @@ body {
   background-image: var(--paper-image);
   background-size: 1200px auto;
   background-repeat: repeat;
+}
+
+/* Fallback when no paper image is present */
+body:has([style*="--paper-image: none"]) {
+  background-image: none;
 }
 
 /* Green/Tan text helpers */
