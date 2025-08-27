@@ -2,7 +2,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: rgb(26, 58, 58);
+  --ink-green: rgb(26, 58, 58);
+  --ink-tan: #6b5f52;
+  --paper-image: url('/paper.jpg');
+  --paper-color: #efe9dc;
 }
 
 @theme inline {
@@ -15,12 +19,70 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #d7d3c9;
   }
 }
 
-body {
+html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-eb-garamond), serif;
+}
+
+/* Site-wide paper background */
+body {
+  background-color: var(--paper-color);
+  background-image: var(--paper-image);
+  background-size: 1200px auto;
+  background-repeat: repeat;
+}
+
+/* Green/Tan text helpers */
+.text-green { color: var(--ink-green); }
+.text-tan { color: var(--ink-tan); }
+
+/* Subtle grain overlay fallback if no paper image is present */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,0.015) 1px, transparent 1px);
+  background-size: 3px 3px, 5px 5px;
+  background-position: 0 0, 1px 2px;
+  mix-blend-mode: multiply;
+}
+
+/* Analog CTA style used across the site */
+.analog-cta {
+  display: inline-block;
+  padding: 0.9rem 1.75rem;
+  border-radius: 0.875rem;
+  background: rgb(26, 58, 58);
+  color: white;
+  font-family: var(--font-eb-garamond), serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(1.25rem, 2vw + 0.8rem, 2rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transform: translateZ(0);
+  transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2) inset, 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.analog-cta:hover {
+  transform: scale(1.04);
+  filter: saturate(0.95) contrast(1.02);
+}
+
+.analog-cta:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analog-cta { transition: none; }
 }
