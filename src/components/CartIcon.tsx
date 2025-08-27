@@ -14,7 +14,16 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="relative p-2 text-[#1A3A3A] hover:text-[#1A3A3A]/90 transition-colors opacity-85 hover:opacity-100"
+      className="relative p-2 text-[#1A3A3A] hover:text-[#1A3A3A]/80 transition-all duration-150 transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1 opacity-85 hover:opacity-100 cursor-pointer select-none"
+      onMouseDown={(e) => {
+        e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
+      }}
+      onMouseUp={(e) => {
+        e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'scale(1) translateY(0)';
+      }}
       aria-label="Shopping cart"
     >
       {/* Nautical anchor decoration */}

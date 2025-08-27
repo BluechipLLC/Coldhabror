@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
@@ -90,19 +90,37 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => updateQuantity(node.id, Math.max(0, node.quantity - 1))}
-                        className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-200 text-[#1A3A3A] opacity-85 hover:opacity-100"
-                      >
-                        -
-                      </button>
-                      <span className="w-8 text-center font-medium text-[#1A3A3A] opacity-85">{node.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(node.id, node.quantity + 1)}
-                        className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-200 text-[#1A3A3A] opacity-85 hover:opacity-100"
-                      >
-                        +
-                      </button>
+                                              <button
+                          onClick={() => updateQuantity(node.id, Math.max(0, node.quantity - 1))}
+                          className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-150 text-[#1A3A3A] opacity-85 hover:opacity-100 cursor-pointer select-none transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1"
+                          onMouseDown={(e) => {
+                            e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
+                          }}
+                          onMouseUp={(e) => {
+                            e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                          }}
+                        >
+                          -
+                        </button>
+                        <span className="w-8 text-center font-medium text-[#1A3A3A] opacity-85">{node.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(node.id, node.quantity + 1)}
+                          className="w-8 h-8 rounded-full border-2 border-[#1A3A3A]/30 flex items-center justify-center hover:bg-[#1A3A3A]/10 hover:border-[#1A3A3A]/50 transition-all duration-150 text-[#1A3A3A] opacity-85 hover:opacity-100 cursor-pointer select-none transform active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1"
+                          onMouseDown={(e) => {
+                            e.currentTarget.style.transform = 'scale(0.95) translateY(2px)';
+                          }}
+                          onMouseUp={(e) => {
+                            e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                          }}
+                        >
+                          +
+                        </button>
                     </div>
                     <button
                       onClick={() => removeItem(node.id)}

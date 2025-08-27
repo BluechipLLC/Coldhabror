@@ -3,14 +3,15 @@ import path from 'path';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string[];
-  };
+  }>;
 }
 
-export default function DynamicPage({ params }: PageProps) {
+export default async function DynamicPage({ params }: PageProps) {
   try {
-    const slugPath = params.slug.join('/');
+    const resolvedParams = await params;
+    const slugPath = resolvedParams.slug.join('/');
     const htmlPath = path.join(process.cwd(), 'public', 'site', slugPath, 'page.html');
     
     if (!fs.existsSync(htmlPath)) {

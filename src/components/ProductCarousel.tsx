@@ -97,16 +97,16 @@ export default function ProductCarousel({
       // Left back position - behind and to the left, cropped
       style.width = `${backImageWidth}px`;
       style.zIndex = 20;
-      const offsetX = Math.max(160, (frontImageWidth - backImageWidth) / 2 + 40);
-      style.transform = `translate(calc(-50% - ${offsetX}px), calc(-50% + 25px)) scale(${!isAnimating && isHovered ? backHoverScale : 0.85})`;
+      const offsetX = Math.max(200, (frontImageWidth - backImageWidth) / 2 + 80);
+      style.transform = `translate(calc(-50% - ${offsetX}px), calc(-50% + 40px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
       style.opacity = "0.85";
       style.objectFit = "cover";
     } else {
       // Right back position - behind and to the right, cropped
       style.width = `${backImageWidth}px`;
       style.zIndex = 20;
-      const offsetX = Math.max(160, (frontImageWidth - backImageWidth) / 2 + 40);
-      style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + 25px)) scale(${!isAnimating && isHovered ? backHoverScale : 0.85})`;
+      const offsetX = Math.max(200, (frontImageWidth - backImageWidth) / 2 + 80);
+      style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + 40px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
       style.opacity = "0.85";
       style.objectFit = "cover";
     }
@@ -172,8 +172,23 @@ export default function ProductCarousel({
                   zIndex: 999,
                   fontFamily: 'var(--font-eb-garamond), serif',
                   opacity: 0.85,
+                  transition: "all 0.15s ease",
+                  cursor: "pointer",
+                  border: "2px solid rgb(26, 58, 58)",
                 }}
-                className="hover:opacity-100 transition-opacity duration-300"
+                className="hover:opacity-100 hover:scale-105 hover:-translate-y-1 active:scale-95 active:translate-y-1"
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'translate(-50%, -50%) scale(0.95) translateY(2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.05) translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1) translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+                }}
               >
                 {image.buyText}
               </Link>

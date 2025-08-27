@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import ProductCarousel from "./ProductCarousel";
 
@@ -12,7 +14,7 @@ export default function HeroSection() {
         <img 
           src="/Logo/Cold Harbo Logo-11.png" 
           alt="Cold Harbor Coffee Company" 
-          className="w-80 h-auto sm:w-96 md:w-[28rem] lg:w-[32rem] xl:w-[36rem] 2xl:w-[40rem] object-contain"
+          className="w-48 h-auto sm:w-56 md:w-64 lg:w-72 xl:w-80 2xl:w-96 object-contain"
         />
       </div>
 
@@ -57,9 +59,21 @@ export default function HeroSection() {
             <div className="flex justify-center lg:justify-start">
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center px-8 py-4 bg-[#1A3A3A] text-white rounded-xl font-semibold text-lg hover:bg-[#1A3A3A]/90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg opacity-85 hover:opacity-100"
+                className="inline-flex items-center justify-center px-8 py-4 bg-[#1A3A3A] text-white rounded-xl font-semibold text-lg transition-all duration-100 transform active:scale-90 active:translate-y-2 hover:scale-102 hover:-translate-y-1 hover:shadow-xl shadow-lg opacity-85 hover:opacity-100 cursor-pointer select-none border-2 border-[#1A3A3A] hover:border-[#1A3A3A]/80 active:border-[#1A3A3A]/60"
                 style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
                 aria-label="Shop All Products"
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.90) translateY(8px)';
+                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                }}
               >
                 Shop All Products
               </Link>
@@ -82,7 +96,7 @@ export default function HeroSection() {
       </div>
 
       {/* Green divider bar 40px below hero section */}
-      <div className="relative z-10 w-full h-20 bg-[#1A3A3A] mt-10"></div>
+      <div className="relative z-10 w-full h-20 bg-[#1A3A3A] mt-[-20px]"></div>
 
       {/* Three-section feature display with inset depth */}
       <div className="bg-white py-20 relative">
@@ -171,6 +185,86 @@ export default function HeroSection() {
               }}>
                 Salt in the air. Pine trees. Old docks that never stop creaking. We come from a place where mornings are cold and the coffee has to hit hard.
               </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Two-section layout below the feature display */}
+      <div className="bg-[#F5F5F0] py-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            {/* Left Column - About Section */}
+            <div className="bg-[#1A3A3A] rounded-3xl p-12 text-white">
+              <h2 className="text-4xl font-bold mb-8 tracking-tight leading-tight" style={{ 
+                fontFamily: 'var(--font-eb-garamond), serif',
+                fontWeight: 700
+              }}>
+                About
+              </h2>
+              {/* Content placeholder for future About section */}
+            </div>
+
+            {/* Right Column - Newsletter Signup */}
+            <div className="bg-white rounded-3xl p-12 relative overflow-hidden">
+              <h2 className="text-4xl font-bold text-[#1A3A3A] mb-6 tracking-tight leading-tight" style={{ 
+                fontFamily: 'var(--font-eb-garamond), serif',
+                fontWeight: 700
+              }}>
+                Dock at the Harbor
+              </h2>
+              
+              <p className="text-[#1A3A3A]/90 mb-8 text-lg leading-relaxed" style={{ 
+                fontFamily: 'var(--font-eb-garamond), serif',
+                fontWeight: 400
+              }}>
+                Sign-up for our email newsletter for future deals and updates!
+              </p>
+              
+              {/* Newsletter Form */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <input
+                  type="email"
+                  placeholder="name@email.com"
+                  className="flex-1 px-6 py-4 border-2 border-[#1A3A3A]/20 rounded-xl text-[#1A3A3A] placeholder-[#1A3A3A]/60 focus:outline-none focus:border-[#1A3A3A] transition-colors duration-300 bg-[#F5F5F0]"
+                  style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+                />
+                <button className="px-8 py-4 bg-[#1A3A3A] text-white rounded-xl font-semibold transition-all duration-100 transform active:scale-90 active:translate-y-2 hover:scale-102 hover:-translate-y-1 hover:shadow-xl shadow-lg opacity-85 hover:opacity-100 whitespace-nowrap cursor-pointer select-none border-2 border-[#1A3A3A] hover:border-[#1A3A3A]/80 active:border-[#1A3A3A]/60" style={{ 
+                  fontFamily: 'var(--font-eb-garamond), serif'
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.90) translateY(8px)';
+                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                }}>
+                  Subscribe
+                </button>
+              </div>
+              
+              <p className="text-[#1A3A3A]/80 text-base leading-relaxed" style={{ 
+                fontFamily: 'var(--font-eb-garamond), serif',
+                fontWeight: 400
+              }}>
+                Sign-up to receive 10% off your first order!
+              </p>
+              
+              {/* Buoy Scrimshaw Artwork */}
+              <div className="absolute bottom-6 right-6 w-24 h-24 opacity-60">
+                <img 
+                  src="/Scrimshaw/BOUY.webp" 
+                  alt="Nautical Buoy" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </div>
 
           </div>

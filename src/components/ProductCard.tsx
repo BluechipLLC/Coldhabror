@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
@@ -77,18 +77,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
         
-        <button
-          onClick={handleAddToCart}
-          disabled={loading || !selectedVariant?.availableForSale}
-          className={`w-full py-2 px-4 rounded-md font-medium transition-all duration-300 opacity-85 hover:opacity-100 ${
-            selectedVariant?.availableForSale
-              ? 'bg-[#1A3A3A] text-white hover:bg-[#1A3A3A]/90 disabled:bg-gray-400 disabled:opacity-60'
-              : 'bg-gray-400 text-gray-600 cursor-not-allowed'
-          }`}
-          style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
-        >
-          {loading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
-        </button>
+                    <button
+              onClick={handleAddToCart}
+              disabled={loading || !selectedVariant?.availableForSale}
+              className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-150 transform cursor-pointer select-none border-2 ${
+                selectedVariant?.availableForSale
+                  ? 'bg-[#1A3A3A] text-white opacity-85 hover:opacity-100 active:scale-95 active:translate-y-1 hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow-md border-[#1A3A3A] hover:border-[#1A3A3A]/80 active:border-[#1A3A3A]/60'
+                  : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60 border-gray-400'
+              }`}
+              style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+              onMouseDown={selectedVariant?.availableForSale ? (e) => {
+                e.currentTarget.style.transform = 'scale(0.95) translateY(4px)';
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+              } : undefined}
+              onMouseUp={selectedVariant?.availableForSale ? (e) => {
+                e.currentTarget.style.transform = 'scale(1.05) translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.3)';
+              } : undefined}
+              onMouseLeave={selectedVariant?.availableForSale ? (e) => {
+                e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.2)';
+              } : undefined}
+            >
+              {loading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
+            </button>
       </div>
     </div>
   );
