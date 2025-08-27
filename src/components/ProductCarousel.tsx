@@ -97,14 +97,16 @@ export default function ProductCarousel({
       // Left back position - behind and to the left, cropped
       style.width = `${backImageWidth}px`;
       style.zIndex = 20;
-      style.transform = `translate(calc(-50% - 160px), calc(-50% + 25px)) scale(${!isAnimating && isHovered ? backHoverScale : 0.85})`;
+      const offsetX = Math.max(160, (frontImageWidth - backImageWidth) / 2 + 40);
+      style.transform = `translate(calc(-50% - ${offsetX}px), calc(-50% + 25px)) scale(${!isAnimating && isHovered ? backHoverScale : 0.85})`;
       style.opacity = "0.9";
       style.objectFit = "cover";
     } else {
       // Right back position - behind and to the right, cropped
       style.width = `${backImageWidth}px`;
       style.zIndex = 20;
-      style.transform = `translate(calc(-50% + 160px), calc(-50% + 25px)) scale(${!isAnimating && isHovered ? backHoverScale : 0.85})`;
+      const offsetX = Math.max(160, (frontImageWidth - backImageWidth) / 2 + 40);
+      style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + 25px)) scale(${!isAnimating && isHovered ? backHoverScale : 0.85})`;
       style.opacity = "0.9";
       style.objectFit = "cover";
     }
