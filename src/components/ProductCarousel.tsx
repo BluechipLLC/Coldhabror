@@ -209,7 +209,7 @@ export default function ProductCarousel({
                 {image.buyText}
               </Link>
             )}
-          </div>
+g           </div>
         );
       })}
     </div>

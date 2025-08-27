@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
     <footer className="mt-[clamp(3rem,10vw,8rem)] bg-[rgb(26,58,58)] text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-[clamp(1rem,4vw,3rem)] py-[clamp(2rem,6vw,3rem)]">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-[clamp(1.5rem,5vw,3rem)]">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-[clamp(1rem,3vw,2rem)]">
             <div>
               <div className="text-[color:var(--paper-color)]/85" style={{
                 fontFamily: 'var(--font-eb-garamond), serif',
@@ -50,9 +50,30 @@ export const Footer: React.FC = () => {
                 ))}
               </ul>
             </div>
+            <div className="text-center">
+              <div className="text-[color:var(--paper-color)]/85" style={{
+                fontFamily: 'Proxima Nova, -apple-system, BlinkMacSystemFont, sans-serif',
+                fontWeight: 300,
+                fontSize: 'clamp(0.875rem,1.3vw,1rem)'
+              }}>Built and Powered by</div>
+              <div className="mt-1 flex justify-center">
+                <a 
+                  href="https://bluechipbranding.net" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="transition-transform duration-300 hover:scale-105"
+                >
+                  <img 
+                    src="/Logo/Bluechip logo-02.png" 
+                    alt="Bluechip Logo" 
+                    className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 object-contain filter brightness-110"
+                  />
+                </a>
+              </div>
+            </div>
           </div>
 
-          <form className="flex items-center gap-3 ml-auto">
+          <form className="flex items-start gap-3 ml-auto">
             <input
               type="email"
               aria-label="Email address"
@@ -70,6 +91,8 @@ export const Footer: React.FC = () => {
           </form>
         </div>
 
+
+        
         <div className="pt-[clamp(2rem,5vw,3rem)] text-center opacity-85" style={{
           fontFamily: 'var(--font-eb-garamond), serif',
           fontSize: 'clamp(0.85rem,1.2vw,0.95rem)'
