@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
     <>
       <header className="w-full">
         {/* Top announcement bar */}
-        <div className="bg-[rgb(26,58,58)] text-white py-2 sm:py-3 relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.1)] opacity-90">
+        <div className="bg-[rgb(26,58,58)] text-white py-2 sm:py-3 relative overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
           {/* Subtle texture overlay */}
           <div className="absolute inset-0 bg-[url('/Logo/image.png')] bg-repeat opacity-10 mix-blend-mode-multiply"></div>
           
@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
         </div>
 
         {/* Main navigation bar */}
-        <div className="bg-[#F3F0E9] relative overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.15)] opacity-90">
+        <div className="bg-[#F3F0E9] relative overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
           {/* Tan texture overlay */}
           <div className="absolute inset-0 bg-[url('/Logo/image.png')] bg-repeat opacity-20 mix-blend-mode-multiply"></div>
           
@@ -99,11 +99,11 @@ export const Header: React.FC = () => {
                     className="relative p-2 text-[#1A3A3A] hover:text-[#1A3A3A]/80 transition-all duration-300 hover:scale-110 group"
                     aria-label="Shopping cart"
                   >
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
                     </svg>
                     {/* Cart Items Indicator */}
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#1A3A3A] text-white text-xs rounded-full flex items-center justify-center font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#1A3A3A] text-white text-xs rounded-full flex items-center justify-center font-bold opacity-85 group-hover:opacity-100 transition-opacity duration-300">
                       0
                     </div>
                   </button>

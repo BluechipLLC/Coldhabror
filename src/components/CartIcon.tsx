@@ -14,9 +14,16 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="relative p-2 text-gray-700 hover:text-gray-900 transition-colors"
+      className="relative p-2 text-[#1A3A3A] hover:text-[#1A3A3A]/90 transition-colors opacity-85 hover:opacity-100"
       aria-label="Shopping cart"
     >
+      {/* Nautical anchor decoration */}
+      <div className="absolute -top-1 -left-1 opacity-85">
+        <svg className="w-3 h-3 text-[#1A3A3A]" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 1H5C3.89 1 3 1.89 3 3V7L1 9V11H3V19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V11H23V9H21M19 19H5V11H19V19Z"/>
+        </svg>
+      </div>
+      
       <svg
         className="w-6 h-6"
         fill="none"
@@ -32,7 +39,7 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick }) => {
         />
       </svg>
       {itemCount > 0 && (
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-[#1A3A3A] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold opacity-85">
           {itemCount}
         </span>
       )}

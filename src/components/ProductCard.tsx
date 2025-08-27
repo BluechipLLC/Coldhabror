@@ -30,7 +30,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow relative group">
       {firstImage && (
         <div className="aspect-w-1 aspect-h-1 w-full">
           <img
@@ -42,16 +42,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
       
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <h3 className="text-lg font-semibold text-[#1A3A3A] mb-2 opacity-85 group-hover:opacity-100 transition-opacity duration-300">
           {product.title}
         </h3>
         
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+        <p className="text-[#1A3A3A]/85 text-sm mb-3 line-clamp-2 group-hover:text-[#1A3A3A] transition-colors duration-300">
           {product.description}
         </p>
         
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xl font-bold text-gray-900">
+          <span className="text-xl font-bold text-[#1A3A3A] opacity-85 group-hover:opacity-100 transition-opacity duration-300">
             ${price.toFixed(2)}
           </span>
           
@@ -66,7 +66,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   setSelectedVariant(variant);
                 }
               }}
-              className="border border-gray-300 rounded px-2 py-1 text-sm"
+              className="border border-[#1A3A3A]/30 rounded px-2 py-1 text-sm text-[#1A3A3A] opacity-85 hover:opacity-100 transition-opacity duration-300 focus:outline-none focus:ring-2 focus:ring-[#1A3A3A]/40"
             >
               {product.variants.edges.map(({ node }) => (
                 <option key={node.id} value={node.id}>
@@ -80,11 +80,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <button
           onClick={handleAddToCart}
           disabled={loading || !selectedVariant?.availableForSale}
-          className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
+          className={`w-full py-2 px-4 rounded-md font-medium transition-all duration-300 opacity-85 hover:opacity-100 ${
             selectedVariant?.availableForSale
-              ? 'bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-400'
+              ? 'bg-[#1A3A3A] text-white hover:bg-[#1A3A3A]/90 disabled:bg-gray-400 disabled:opacity-60'
               : 'bg-gray-400 text-gray-600 cursor-not-allowed'
           }`}
+          style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
         >
           {loading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
         </button>

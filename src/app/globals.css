@@ -4,6 +4,7 @@
   --foreground: #1A3A3A;
   --ink-green: #1A3A3A;
   --ink-tan: #F3F0E9;
+  --nautical-accent: #2C5F5F;
 }
 
 @theme inline {
@@ -59,8 +60,6 @@ body::before {
 .text-green { color: var(--ink-green); }
 .text-tan { color: var(--ink-tan); }
 
-
-
 /* Analog CTA style used across the site */
 .analog-cta {
   display: inline-block;
@@ -78,11 +77,13 @@ body::before {
   transform: translateZ(0);
   transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
   box-shadow: 0 1px 0 rgba(0,0,0,0.2) inset, 0 8px 20px rgba(0,0,0,0.15);
+  opacity: 0.85;
 }
 
 .analog-cta:hover {
   transform: scale(1.04);
   filter: saturate(0.95) contrast(1.02);
+  opacity: 1;
 }
 
 .analog-cta:active {
