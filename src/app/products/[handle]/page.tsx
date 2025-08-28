@@ -219,8 +219,21 @@ export default function DynamicProductPage() {
                   {product.title}
                 </h1>
                 
-                <div className="text-4xl text-[#1A3A3A] font-bold mb-6">
-                  ${product.priceRange.minVariantPrice.amount}
+                <div className="mb-6">
+                  {product.compareAtPriceRange && parseFloat(product.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.priceRange.minVariantPrice.amount) ? (
+                    <div className="flex items-center gap-4">
+                      <span className="text-4xl text-[#1A3A3A] font-bold">
+                        ${product.priceRange.minVariantPrice.amount}
+                      </span>
+                      <span className="text-2xl text-[#d92f38] line-through">
+                        ${product.compareAtPriceRange.minVariantPrice.amount}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="text-4xl text-[#1A3A3A] font-bold">
+                      ${product.priceRange.minVariantPrice.amount}
+                    </div>
+                  )}
                 </div>
                 
                 <p className="text-[#1A3A3A]/80 text-xl leading-relaxed" style={{

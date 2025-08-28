@@ -54,12 +54,22 @@ export interface ShopifyProduct {
       currencyCode: string;
     };
   };
+  compareAtPriceRange?: {
+    minVariantPrice: {
+      amount: string;
+      currencyCode: string;
+    };
+  };
   variants: {
     edges: Array<{
       node: {
         id: string;
         title: string;
         price: {
+          amount: string;
+          currencyCode: string;
+        };
+        compareAtPrice?: {
           amount: string;
           currencyCode: string;
         };
@@ -177,6 +187,7 @@ export const fetchCart = async (cartId: string): Promise<Cart> => {
 export const fetchProducts = async (): Promise<ShopifyProduct[]> => {
   try {
     // Fetch products using the correct Shopify API method
+    // Note: compareAtPrice data needs to be explicitly requested in the query
     const products = await shopifyClient.product.fetchQuery({
       first: 50, // Fetch up to 50 products
       sortKey: 'TITLE',
@@ -202,6 +213,12 @@ export const fetchProducts = async (): Promise<ShopifyProduct[]> => {
           currencyCode: product.variants[0]?.price?.currencyCode || 'USD'
         }
       },
+      compareAtPriceRange: product.variants[0]?.compareAtPrice ? {
+        minVariantPrice: {
+          amount: product.variants[0]?.compareAtPrice?.amount || '0.00',
+          currencyCode: product.variants[0]?.compareAtPrice?.currencyCode || 'USD'
+        }
+      } : undefined,
       variants: {
         edges: product.variants?.map((variant) => ({
           node: {
@@ -211,6 +228,10 @@ export const fetchProducts = async (): Promise<ShopifyProduct[]> => {
               amount: variant.price?.amount || '0.00',
               currencyCode: variant.price?.currencyCode || 'USD'
             },
+            compareAtPrice: variant.compareAtPrice ? {
+              amount: variant.compareAtPrice?.amount || '0.00',
+              currencyCode: variant.compareAtPrice?.currencyCode || 'USD'
+            } : undefined,
             availableForSale: variant.available || false
           }
         })) || []
@@ -224,6 +245,7 @@ export const fetchProducts = async (): Promise<ShopifyProduct[]> => {
 
 export const fetchProduct = async (handle: string): Promise<ShopifyProduct> => {
   try {
+    // Note: compareAtPrice data needs to be explicitly requested in the query
     const product: any = await shopifyClient.product.fetchByHandle(handle);
     
     // Transform the Shopify response to match our interface
@@ -246,6 +268,12 @@ export const fetchProduct = async (handle: string): Promise<ShopifyProduct> => {
           currencyCode: product.variants[0]?.price?.currencyCode || 'USD'
         }
       },
+      compareAtPriceRange: product.variants[0]?.compareAtPrice ? {
+        minVariantPrice: {
+          amount: product.variants[0]?.compareAtPrice?.amount || '0.00',
+          currencyCode: product.variants[0]?.compareAtPrice?.currencyCode || 'USD'
+        }
+      } : undefined,
       variants: {
         edges: product.variants?.map((variant) => ({
           node: {
@@ -255,6 +283,10 @@ export const fetchProduct = async (handle: string): Promise<ShopifyProduct> => {
               amount: variant.price?.amount || '0.00',
               currencyCode: variant.price?.currencyCode || 'USD'
             },
+            compareAtPrice: variant.compareAtPrice ? {
+              amount: variant.compareAtPrice?.amount || '0.00',
+              currencyCode: variant.compareAtPrice?.currencyCode || 'USD'
+            } : undefined,
             availableForSale: variant.available || false
           }
         })) || []

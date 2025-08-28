@@ -51,12 +51,12 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
             <div className="text-center">
-              <div className="text-[color:var(--paper-color)]/85" style={{
+              <div className="text-[color:var(--paper-color)]/85 mb-0" style={{
                 fontFamily: 'Proxima Nova, -apple-system, BlinkMacSystemFont, sans-serif',
                 fontWeight: 300,
                 fontSize: 'clamp(0.875rem,1.3vw,1rem)'
               }}>Built and Powered by</div>
-              <div className="mt-1 flex justify-center">
+              <div className="-mt-4 flex justify-center">
                 <a 
                   href="https://bluechipbranding.net" 
                   target="_blank" 

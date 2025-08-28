@@ -5,6 +5,8 @@
   --ink-green: #1A3A3A;
   --ink-tan: #F3F0E9;
   --nautical-accent: #2C5F5F;
+  --harbor-blue: #7b8ca6;
+  --error-red: #d92f38;
 }
 
 @theme inline {
@@ -59,6 +61,18 @@ body::before {
 /* Green/Tan text helpers */
 .text-green { color: var(--ink-green); }
 .text-tan { color: var(--ink-tan); }
+.text-harbor-blue { color: var(--harbor-blue); }
+.text-error-red { color: var(--error-red); }
+
+/* Harbor blue accent helpers */
+.bg-harbor-blue { background-color: var(--harbor-blue); }
+.border-harbor-blue { border-color: var(--harbor-blue); }
+.ring-harbor-blue { --tw-ring-color: var(--harbor-blue); }
+
+/* Error red helpers */
+.bg-error-red { background-color: var(--error-red); }
+.border-error-red { border-color: var(--error-red); }
+.ring-error-red { --tw-ring-color: var(--error-red); }
 
 /* Analog CTA style used across the site */
 .analog-cta {

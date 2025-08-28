@@ -33,12 +33,37 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick }) => {
         </svg>
       </div>
       
+      <img
+        src="/favicons/cart.webp"
+        alt="Shopping Cart"
+        className="w-12 h-12 object-contain"
+        style={{ 
+          display: 'block', 
+          border: '3px solid red', 
+          backgroundColor: 'yellow',
+          position: 'relative',
+          zIndex: 1000
+        }}
+        onError={(e) => {
+          console.error('Failed to load cart image:', e);
+          e.currentTarget.style.display = 'none';
+        }}
+        onLoad={() => console.log('Cart image loaded successfully')}
+      />
+      {/* Fallback SVG in case image fails to load */}
       <svg
-        className="w-6 h-6"
+        className="w-6 h-6 absolute inset-0"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
+        style={{ display: 'none' }}
+        onLoad={(e) => {
+          const img = e.currentTarget.previousElementSibling as HTMLImageElement;
+          if (img && img.complete && img.naturalHeight === 0) {
+            e.currentTarget.style.display = 'block';
+          }
+        }}
       >
         <path
           strokeLinecap="round"

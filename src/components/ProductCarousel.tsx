@@ -18,6 +18,64 @@ export default function ProductCarousel({
   frontHoverScale = 1.05,
   backHoverScale = 1.01,
 }: ProductCarouselProps) {
+  // Responsive sizing and spacing per breakpoint
+  const [viewportWidth, setViewportWidth] = useState<number>(
+    typeof window !== 'undefined' ? window.innerWidth : 1280
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let rafId: number | null = null;
+    const onResize = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => setViewportWidth(window.innerWidth));
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  const breakpoint = viewportWidth >= 1536
+    ? '2xl'
+    : viewportWidth >= 1280
+    ? 'xl'
+    : viewportWidth >= 1024
+    ? 'lg'
+    : viewportWidth >= 640
+    ? 'sm'
+    : 'xs';
+
+  const getResponsiveConfig = () => {
+    // Base these around provided props but clamp per breakpoint for better composition
+    switch (breakpoint) {
+      case '2xl':
+        return { frontW: Math.min(frontImageWidth, 360), backW: Math.min(backImageWidth, 280), offsetX: 260, backYOffset: 60, backScale: 0.9 };
+      case 'xl':
+        return { frontW: Math.min(frontImageWidth, 320), backW: Math.min(backImageWidth, 250), offsetX: 240, backYOffset: 55, backScale: 0.88 };
+      case 'lg':
+        return { frontW: Math.min(frontImageWidth, 300), backW: Math.min(backImageWidth, 220), offsetX: 220, backYOffset: 50, backScale: 0.86 };
+      case 'sm':
+        return { frontW: Math.min(frontImageWidth, 220), backW: Math.min(backImageWidth, 170), offsetX: 190, backYOffset: 42, backScale: 0.84 };
+      case 'xs':
+      default:
+        return { frontW: Math.min(frontImageWidth, 180), backW: Math.min(backImageWidth, 140), offsetX: 160, backYOffset: 36, backScale: 0.82 };
+    }
+  };
+
+  const { frontW, backW, offsetX, backYOffset, backScale } = getResponsiveConfig();
+
+  // Detect touch to avoid hover scaling on mobile which can cause layout jank
+  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
+  // Constrain lateral spacing so bags never overflow the viewport on small screens
+  const sidePadding = breakpoint === 'xs' ? 16 : breakpoint === 'sm' ? 20 : 24;
+  const maxOffsetFromViewport = Math.max(120, (viewportWidth - frontW) / 2 - sidePadding);
+  const safeOffsetX = Math.min(offsetX, maxOffsetFromViewport);
+
+  // Provide a stable container height per breakpoint to prevent overlap/cutoff
+  const containerHeight = breakpoint === 'sm' ? 320 : breakpoint === 'xs' ? 260 : null; // use parent height on lg+
   const [images, setImages] = useState([
     { 
       id: "img1", 
@@ -44,22 +102,31 @@ export default function ProductCarousel({
 
   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState<boolean>(false);
+  const [showHint, setShowHint] = useState<boolean>(false);
+  const [wiggleActive, setWiggleActive] = useState<boolean>(false);
 
-  // Auto-rotate once after 5 seconds when page opens
+  // Disabled auto-rotate to avoid unexpected movement and race conditions on mobile
+  // First-run hint overlay
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isAnimating) {
-        setImages((prev) => {
-          return prev.map((img) => ({
-            ...img,
-            position: (img.position + 1) % 3
-          }));
-        });
+    if (typeof window === 'undefined') return;
+    try {
+      const seen = window.localStorage.getItem('ch_pc_hint_seen');
+      if (!seen) {
+        setShowHint(true);
+        const t = setTimeout(() => setShowHint(false), 2500);
+        // schedule a subtle wiggle shortly after to attract attention
+        const w1 = setTimeout(() => setWiggleActive(true), 1000);
+        const w2 = setTimeout(() => setWiggleActive(false), 2200);
+        return () => { clearTimeout(t); clearTimeout(w1); clearTimeout(w2); };
       }
-    }, 5000);
+    } catch {}
+  }, []);
 
-    return () => clearTimeout(timer);
-  }, []); // Remove isAnimating dependency so it only runs once
+  const dismissHint = () => {
+    if (showHint) setShowHint(false);
+    try { window.localStorage.setItem('ch_pc_hint_seen', '1'); } catch {}
+  };
 
   const handleClick = (clickedImageId: string) => {
     if (isAnimating) return;
@@ -105,24 +172,28 @@ export default function ProductCarousel({
     
     if (position === 0) {
       // Front position - centered, largest, cropped for better fit
-      style.width = `${frontImageWidth}px`;
+      style.width = `${frontW}px`;
       style.zIndex = 30;
-      style.transform = `translate(-50%, -50%) scale(${!isAnimating && isHovered ? frontHoverScale : 1})`;
+      const frontScale = !isAnimating && isHovered && !isTouch ? frontHoverScale : 1;
+      style.transform = `translate(-50%, -50%) scale(${frontScale})`;
+      if (wiggleActive && !isAnimating) {
+        style.animation = 'ch-wiggle 0.25s ease-in-out 0s 4 alternate';
+      }
       style.objectFit = "cover";
     } else if (position === 1) {
       // Left back position - behind and to the left, cropped
-      style.width = `${backImageWidth}px`;
+      style.width = `${backW}px`;
       style.zIndex = 20;
-      const offsetX = Math.max(240, (frontImageWidth - backImageWidth) / 2 + 100);
-      style.transform = `translate(calc(-50% - ${offsetX}px), calc(-50% + 50px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
+      const backScaleFinal = !isAnimating && isHovered && !isTouch ? Math.min(backScale + 0.02, 0.92) : backScale;
+      style.transform = `translate(calc(-50% - ${safeOffsetX}px), calc(-50% + ${backYOffset}px)) scale(${backScaleFinal})`;
       style.opacity = "0.98";
       style.objectFit = "cover";
     } else {
       // Right back position - behind and to the right, cropped
-      style.width = `${backImageWidth}px`;
+      style.width = `${backW}px`;
       style.zIndex = 20;
-      const offsetX = Math.max(240, (frontImageWidth - backImageWidth) / 2 + 100);
-      style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + 50px)) scale(${!isAnimating && isHovered ? 0.88 : 0.85})`;
+      const backScaleFinal = !isAnimating && isHovered && !isTouch ? Math.min(backScale + 0.02, 0.92) : backScale;
+      style.transform = `translate(calc(-50% + ${safeOffsetX}px), calc(-50% + ${backYOffset}px)) scale(${backScaleFinal})`;
       style.opacity = "0.98";
       style.objectFit = "cover";
     }
@@ -130,18 +201,93 @@ export default function ProductCarousel({
     return style;
   };
 
+  // Swipe support (mobile only)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const swipeThreshold = 40; // px horizontal movement to trigger
+
+  const rotate = (direction: 'left' | 'right') => {
+    if (isAnimating) return;
+    if (!hasInteracted) setHasInteracted(true);
+    dismissHint();
+    setIsAnimating(true);
+    setImages((prev) =>
+      prev.map((img) => ({
+        ...img,
+        position:
+          direction === 'left'
+            ? (img.position - 1 + 3) % 3 // counterclockwise
+            : (img.position + 1) % 3, // clockwise
+      }))
+    );
+    setTimeout(() => setIsAnimating(false), rotationSpeed * 1000);
+  };
+
   return (
     <div
       style={{
         position: "relative",
         width: "100%",
-        height: "100%",
+        height: containerHeight === null ? "100%" : `${containerHeight}px`,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         overflow: "visible",
       }}
+      onTouchStart={(e) => {
+        if (!isTouch) return;
+        const t = e.touches[0];
+        setTouchStartX(t.clientX);
+        setTouchStartY(t.clientY);
+      }}
+      onTouchMove={(e) => {
+        // Prevent vertical scroll hijack: only prevent if horizontal intent is strong
+        if (!isTouch || touchStartX === null || touchStartY === null) return;
+        const dx = e.touches[0].clientX - touchStartX;
+        const dy = e.touches[0].clientY - touchStartY;
+        if (Math.abs(dx) > Math.abs(dy) * 1.5) {
+          e.preventDefault();
+        }
+      }}
+      onTouchEnd={(e) => {
+        if (!isTouch || touchStartX === null || touchStartY === null) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+        setTouchStartX(null);
+        setTouchStartY(null);
+        // Only trigger on horizontal swipes beyond threshold
+        if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > swipeThreshold) {
+          if (dx > 0) rotate('left'); else rotate('right');
+        }
+      }}
+      onClick={() => { setHasInteracted(true); dismissHint(); }}
+      role="region"
+      aria-label="Product carousel, swipe on mobile or click side bags to rotate"
     >
+      {/* Wiggle keyframes (on brand, subtle). Respect reduced motion by not enabling when requested */}
+      <style jsx global>{`
+        @keyframes ch-wiggle { 0% { transform: translate(-50%, -50%) rotate(0deg) } 100% { transform: translate(-50%, -50%) rotate(-2.5deg) } }
+      `}</style>
+      {/* On-brand arrows (desktop) */}
+      <button
+        type="button"
+        aria-label="Previous"
+        onClick={() => rotate('left')}
+        className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-[60] text-[#1A3A3A]/70 hover:text-[#1A3A3A] transition-colors"
+        style={{ cursor: 'pointer' }}
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button
+        type="button"
+        aria-label="Next"
+        onClick={() => rotate('right')}
+        className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-[60] text-[#1A3A3A]/70 hover:text-[#1A3A3A] transition-colors"
+        style={{ cursor: 'pointer' }}
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
       {images.map((image) => {
         const isHovered = hoveredImageId === image.id;
 
@@ -170,7 +316,7 @@ export default function ProductCarousel({
               }}
             />
 
-            {image.position === 0 && !isAnimating && isHovered && (
+            {image.position === 0 && !isAnimating && (isHovered || isTouch) && (
               <Link
                 href={image.buyUrl}
                 style={{
@@ -209,9 +355,18 @@ export default function ProductCarousel({
                 {image.buyText}
               </Link>
             )}
-g           </div>
+          </div>
         );
       })}
+
+      {/* First-run hint overlay */}
+      {showHint && (
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-[80]">
+          <div className="px-3 py-1.5 rounded-full text-white bg-[#1A3A3A]/80 border border-[#1A3A3A] text-sm" style={{ fontFamily: 'var(--font-eb-garamond), serif' }}>
+            Swipe or tap a bag
+          </div>
+        </div>
+      )}
     </div>
   );
 }

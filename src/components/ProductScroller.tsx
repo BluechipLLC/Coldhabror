@@ -79,7 +79,13 @@ export default function ProductScroller({
   if (loading) {
     return (
       <div className="w-full flex justify-center items-center py-20">
-        <div className="text-gray-600">Loading coffee blends...</div>
+        <div className="text-[#1A3A3A]/70" style={{
+          fontFamily: 'var(--font-eb-garamond), serif',
+          fontSize: '1.25rem',
+          fontWeight: 500
+        }}>
+          Loading coffee blends...
+        </div>
       </div>
     );
   }
@@ -87,7 +93,13 @@ export default function ProductScroller({
   if (products.length === 0) {
     return (
       <div className="w-full flex justify-center items-center py-20">
-        <div className="text-red-600">No coffee products available. Please check your configuration.</div>
+        <div className="text-red-600" style={{
+          fontFamily: 'var(--font-eb-garamond), serif',
+          fontSize: '1.125rem',
+          fontWeight: 500
+        }}>
+          No coffee products available. Please check your configuration.
+        </div>
       </div>
     );
   }
@@ -95,23 +107,30 @@ export default function ProductScroller({
   // Duplicate products multiple times for seamless infinite loop
   const duplicatedProducts = [...products, ...products, ...products, ...products, ...products];
 
-  // Calculate total width for animation - make it fill screen width
+  // Calculate total width for animation
   const totalSetWidth = products.reduce((acc, product) => acc + 320 + itemGap, 0);
 
   return (
     <div className="w-full overflow-hidden relative bg-transparent">
-      {/* Fallback notice */}
+      {/* Fallback notice - Following Padding Rules */}
       {usingFallback && (
-        <div className="text-center mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-yellow-800 text-sm">
-            💡 <strong>Demo Mode:</strong> Showing sample coffee products. 
-            <a href="/SHOPIFY_SETUP.md" className="underline ml-1">Configure Shopify</a> for real products.
-          </p>
+        <div className="max-w-7xl mx-auto px-[clamp(1rem,4vw,3rem)] mb-8">
+          <div className="text-center p-4 bg-[#1A3A3A]/5 border border-[#1A3A3A]/10 rounded-xl">
+            <p className="text-[#1A3A3A]/80" style={{
+              fontFamily: 'var(--font-eb-garamond), serif',
+              fontSize: '0.95rem',
+              fontWeight: 500
+            }}>
+              💡 <strong>Demo Mode:</strong> Showing sample coffee products. 
+              <a href="/SHOPIFY_SETUP.md" className="underline ml-1 hover:text-[#1A3A3A] transition-colors">Configure Shopify</a> for real products.
+            </p>
+          </div>
         </div>
       )}
       
+      {/* Product Scroller - Edge to Edge */}
       <div
-        className="flex gap-10"
+        className="flex gap-8"
         style={{
           animation: `scroll ${scrollSpeed}s linear infinite`,
           width: 'max-content',
@@ -122,44 +141,97 @@ export default function ProductScroller({
             key={`${product.id}-${index}`}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            className="relative w-80 rounded-lg overflow-hidden flex-shrink-0 cursor-pointer transition-transform duration-300 ease-out"
+            className="relative rounded-2xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-500 ease-out shadow-lg hover:shadow-2xl"
             style={{
               transform: hoveredIndex === index ? `scale(${hoverScaleFactor})` : 'scale(1)',
+              width: 'clamp(280px, 25vw, 400px)',
+              minWidth: '280px',
+              maxWidth: '400px'
             }}
           >
-            {/* Product Image */}
-            <img
-              src={product.images.edges[0]?.node.url || '/placeholder-coffee.jpg'}
-              alt={product.images.edges[0]?.node.altText || product.title}
-              className="w-full h-auto block"
-              loading="lazy"
-            />
-
-            {/* Product Info Overlay - Much lighter gradient */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent p-4">
-              <h3 className="text-white font-semibold text-lg mb-1 drop-shadow-lg">{product.title}</h3>
-              <p className="text-white/90 text-sm mb-3 drop-shadow-lg">
-                ${parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
-              </p>
+            {/* Product Image Container - Responsive height */}
+            <div className="relative w-full bg-[#1A3A3A]/5" style={{
+              height: 'clamp(280px, 35vh, 400px)'
+            }}>
+              <img
+                src={product.images.edges[0]?.node.url || '/placeholder-coffee.jpg'}
+                alt={product.images.edges[0]?.node.altText || product.title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              
+              {/* Subtle overlay for better text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
             </div>
 
-            {/* Shop Now Button - Using site's analog-cta style */}
-            {hoveredIndex === index && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col gap-2">
+            {/* Product Info Card - Responsive padding */}
+            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl border-t-2 border-[#1A3A3A]/20 shadow-lg" style={{
+              padding: 'clamp(0.5rem, 2vw, 1.5rem)'
+            }}>
+              <h3 className="text-[#1A3A3A] font-semibold mb-2 leading-tight" style={{
+                fontFamily: 'var(--font-eb-garamond), serif',
+                fontWeight: 600,
+                fontSize: 'clamp(0.875rem, 2.2vw, 1.25rem)'
+              }}>
+                {product.title}
+              </h3>
+              <div className="mb-3">
+                {product.compareAtPriceRange && parseFloat(product.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.priceRange.minVariantPrice.amount) ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#1A3A3A]/70 font-semibold" style={{
+                      fontFamily: 'var(--font-eb-garamond), serif',
+                      fontWeight: 600,
+                      fontSize: 'clamp(0.75rem, 1.8vw, 1.125rem)'
+                    }}>
+                      ${parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
+                    </span>
+                    <span className="text-[#d92f38] line-through opacity-80" style={{
+                      fontFamily: 'var(--font-eb-garamond), serif',
+                      fontWeight: 500,
+                      fontSize: 'clamp(0.65rem, 1.6vw, 1rem)'
+                    }}>
+                      ${parseFloat(product.compareAtPriceRange.minVariantPrice.amount).toFixed(2)}
+                    </span>
+                  </div>
+                ) : (
+                  <p className="text-[#1A3A3A]/70" style={{
+                    fontFamily: 'var(--font-eb-garamond), serif',
+                    fontWeight: 500,
+                    fontSize: 'clamp(0.75rem, 1.8vw, 1.125rem)'
+                  }}>
+                    ${parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
+                  </p>
+                )}
+              </div>
+              
+              {/* Action Buttons - Responsive sizing */}
+              <div className="flex gap-2 sm:gap-3">
                 <a
                   href={`/products/${product.handle}`}
-                  className="analog-cta"
+                  className="flex-1 text-center bg-[#1A3A3A] text-white rounded-xl font-semibold transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-105 active:scale-95"
+                  style={{
+                    fontFamily: 'var(--font-eb-garamond), serif',
+                    fontWeight: 600,
+                    padding: 'clamp(0.5rem, 1.8vw, 0.75rem) clamp(0.625rem, 2vw, 1rem)',
+                    fontSize: 'clamp(0.7rem, 1.8vw, 0.875rem)'
+                  }}
                 >
                   {buyButtonText}
                 </a>
                 <button
                   onClick={() => handleAddToCart(product)}
-                  className="analog-cta text-sm py-2 px-4"
+                  className="flex-1 text-center bg-white text-[#1A3A3A] border-2 border-[#1A3A3A] rounded-xl font-semibold transition-all duration-300 hover:bg-[#1A3A3A] hover:text-white active:scale-95"
+                  style={{
+                    fontFamily: 'var(--font-eb-garamond), serif',
+                    fontWeight: 600,
+                    padding: 'clamp(0.5rem, 1.8vw, 0.75rem) clamp(0.625rem, 2vw, 1rem)',
+                    fontSize: 'clamp(0.7rem, 1.8vw, 0.875rem)'
+                  }}
                 >
                   Add to Cart
                 </button>
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>

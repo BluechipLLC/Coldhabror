@@ -139,36 +139,48 @@ export default function ProductsPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {products.map((product) => (
                 <div key={product.id} className="group">
-                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02]">
-                    <div className="relative overflow-hidden">
+                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] border border-[#7b8ca6]/20">
+                    <div className="relative overflow-hidden bg-white">
                       <img 
                         src={product.images.edges[0]?.node.url} 
                         alt={product.images.edges[0]?.node.altText || product.title}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-auto object-contain bg-white"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute top-3 left-3 bg-[#7b8ca6] text-white text-xs font-semibold tracking-wide px-3 py-1 rounded-full shadow-sm">
+                        Coastal Roast
+                      </div>
                     </div>
                     
-                    <div className="p-8">
-                      <h3 className="text-[#1A3A3A] text-2xl font-bold mb-4 tracking-tight" style={{
+                    <div className="p-6 lg:p-7">
+                      <h3 className="text-[#1A3A3A] text-xl lg:text-2xl font-bold mb-2 tracking-tight" style={{
                         fontFamily: 'var(--font-eb-garamond), serif',
                         fontWeight: 700
                       }}>
                         {product.title}
                       </h3>
                       
-                      <p className="text-[#1A3A3A]/80 mb-6 leading-relaxed text-lg" style={{
-                        fontFamily: 'var(--font-eb-garamond), serif',
-                        fontWeight: 400
-                      }}>
-                        {product.description}
+                      <p className="text-[#7b8ca6] mb-5 leading-relaxed body-copy text-sm sm:text-base">
+                        {product.description?.slice(0, 140) || 'Bold, balanced, and built for cold mornings.'}
                       </p>
                       
-                      <div className="flex items-center justify-between mb-8">
-                        <span className="text-[#1A3A3A] text-3xl font-bold">
-                          ${product.priceRange.minVariantPrice.amount}
-                        </span>
-                        <span className="text-[#1A3A3A]/60 text-lg font-medium">12 oz Bag</span>
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex flex-col">
+                          {product.compareAtPriceRange && parseFloat(product.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.priceRange.minVariantPrice.amount) ? (
+                            <div className="flex items-center gap-2">
+                              <span className="text-[#1A3A3A] text-2xl lg:text-3xl font-bold">
+                                ${product.priceRange.minVariantPrice.amount}
+                              </span>
+                              <span className="text-[#d92f38] text-lg lg:text-xl line-through">
+                                ${product.compareAtPriceRange.minVariantPrice.amount}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-[#1A3A3A] text-2xl lg:text-3xl font-bold">
+                              ${product.priceRange.minVariantPrice.amount}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[#7b8ca6] text-sm lg:text-base font-medium">12 oz Bag</span>
                       </div>
                       
                       <Link
@@ -210,10 +222,7 @@ export default function ProductsPage() {
             }}>
               Ready to Experience Coastal Coffee?
             </h2>
-            <p className="text-[#1A3A3A]/80 text-xl leading-relaxed mb-10" style={{
-              fontFamily: 'var(--font-eb-garamond), serif',
-              fontWeight: 400
-            }}>
+            <p className="text-[#7b8ca6] text-xl leading-relaxed mb-10 body-copy">
               Each blend tells a story of the coast. Choose your morning companion.
             </p>
             <Link

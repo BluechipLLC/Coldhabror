@@ -51,9 +51,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </p>
         
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xl font-bold text-[#1A3A3A] opacity-85 group-hover:opacity-100 transition-opacity duration-300">
-            ${price.toFixed(2)}
-          </span>
+          <div className="flex items-center gap-2">
+            {product.variants.edges[0]?.node.compareAtPrice && 
+             parseFloat(product.variants.edges[0].node.compareAtPrice.amount) > price ? (
+              <>
+                <span className="text-xl font-bold text-[#1A3A3A] opacity-85 group-hover:opacity-100 transition-opacity duration-300">
+                  ${price.toFixed(2)}
+                </span>
+                <span className="text-lg text-[#d92f38] line-through opacity-85 group-hover:opacity-100 transition-opacity duration-300">
+                  ${parseFloat(product.variants.edges[0].node.compareAtPrice.amount).toFixed(2)}
+                </span>
+              </>
+            ) : (
+              <span className="text-xl font-bold text-[#1A3A3A] opacity-85 group-hover:opacity-100 transition-opacity duration-300">
+                ${price.toFixed(2)}
+              </span>
+            )}
+          </div>
           
           {product.variants.edges.length > 1 && (
             <select

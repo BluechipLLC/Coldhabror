@@ -25,17 +25,18 @@ export default function HeroSection() {
           {/* Left side - Text and CTA with artwork background */}
           <div className="text-center lg:text-left relative lg:pl-8">
             {/* Artwork background stuck to hero text - Made Bigger */}
-            <div className="absolute inset-0 flex items-center justify-start opacity-60 -z-10">
+            <div className="absolute inset-0 flex items-center justify-start opacity-50 -z-10">
               <img 
                 src="/Scrimshaw/artwork-01.webp" 
                 alt="Coastal Artwork" 
-                className="h-full w-auto object-contain object-left opacity-60
-                           sm:h-[90vh] sm:w-auto
-                           md:h-[95vh] md:w-auto
-                           lg:h-[100vh] lg:w-auto
-                           xl:h-[105vh] xl:w-auto
-                           2xl:h-[110vh] 2xl:w-auto
-                           transform scale-125 lg:scale-150"
+                className="w-auto object-contain object-left opacity-50
+                           h-[50vh] max-h-[520px]
+                           sm:h-[50vh] sm:max-h-[520px]
+                           md:h-[50vh] md:max-h-[520px]
+                           lg:h-[50vh] lg:max-h-[520px]
+                           xl:h-[50vh] xl:max-h-[520px]
+                           2xl:h-[50vh] 2xl:max-h-[520px]
+                           transform scale-110"
               />
             </div>
             
@@ -83,10 +84,10 @@ export default function HeroSection() {
 
           {/* Right side - Interactive Product Carousel */}
           <div className="relative flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-2xl h-[700px] lg:pr-8">
+            <div className="relative w-full max-w-2xl h-[500px] sm:h-[600px] lg:h-[700px] lg:pr-8">
               <ProductCarousel 
-                frontImageWidth={400}
-                backImageWidth={320}
+                frontImageWidth={300}
+                backImageWidth={240}
                 rotationSpeed={0.6}
                 frontHoverScale={1.05}
                 backHoverScale={1.02}
@@ -127,9 +128,7 @@ export default function HeroSection() {
               }}>
                 No Added Flavoring
               </h3>
-              <p className="text-[#1A3A3A]/90 leading-relaxed tracking-wide text-lg" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 400,
+              <p className="text-[#1A3A3A]/90 leading-relaxed tracking-wide text-lg body-copy" style={{ 
                 lineHeight: '1.7'
               }}>
                 No hazelnut, no caramel, this coffee was created to be taken in its purest form: black. Nothing added, nothing hidden.
@@ -153,9 +152,7 @@ export default function HeroSection() {
               }}>
                 Roasted to Cut Through
               </h3>
-              <p className="text-[#1A3A3A]/90 leading-relaxed tracking-wide text-lg" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 400,
+              <p className="text-[#1A3A3A]/90 leading-relaxed tracking-wide text-lg body-copy" style={{ 
                 lineHeight: '1.7'
               }}>
                 Sharp, balanced, and built to wake you up not lull you back to sleep. Every batch is roasted to hold its own against fog, cold, and early hours.
@@ -179,9 +176,7 @@ export default function HeroSection() {
               }}>
                 Born on the Coast
               </h3>
-              <p className="text-[#1A3A3A]/90 leading-relaxed tracking-wide text-lg" style={{ 
-                fontFamily: 'var(--font-eb-garamond), serif',
-                fontWeight: 400,
+              <p className="text-[#1A3A3A]/90 leading-relaxed tracking-wide text-lg body-copy" style={{ 
                 lineHeight: '1.7'
               }}>
                 Salt in the air. Pine trees. Old docks that never stop creaking. We come from a place where mornings are cold and the coffee has to hit hard.
@@ -193,77 +188,40 @@ export default function HeroSection() {
       </div>
 
       {/* Two-section layout below the feature display */}
-      <div className="bg-[#F5F5F0] py-20">
-        <div className="w-full px-[clamp(1rem,4vw,3rem)]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="bg-[#F5F5F0] py-12 lg:py-20">
+        <div className="w-full px-[clamp(1rem,4vw,3rem)] max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-0 items-stretch">
             
-            {/* Left Column - About Section */}
-            <div className="bg-[#1A3A3A] rounded-3xl p-16 text-white relative overflow-hidden">
-              {/* Background texture */}
-              <div className="absolute inset-0 bg-[url('/Scrimshaw/artwork-02.webp')] bg-cover bg-center opacity-10"></div>
-              
-              <div className="relative z-10">
-                <h2 className="text-5xl font-bold mb-8 tracking-tight leading-tight" style={{ 
-                  fontFamily: 'var(--font-eb-garamond), serif',
-                  fontWeight: 700
-                }}>
-                  Our Story
-                </h2>
-                
-                <div className="space-y-6 text-lg leading-relaxed">
-                  <p>
-                    Born from the rugged beauty of the Pacific Northwest coast, Cold Harbor Coffee emerged from a simple truth: 
-                    morning coffee needs to be as bold as the sea that shapes our shores.
-                  </p>
-                  
-                  <p>
-                    We're not just coffee roasters—we're morning people. The kind who know that 4 AM fog has a taste, 
-                    that dock pilings creak in harmony with the tide, and that the best conversations happen before sunrise.
-                  </p>
-                  
-                  <p>
-                    Every bean we roast carries the weight of coastal tradition, every blend crafted to cut through 
-                    the morning chill and wake you up like a foghorn cutting through the mist.
-                  </p>
-                </div>
-                
-                <div className="mt-10">
-                  <a 
-                    href="/about" 
-                    className="inline-flex items-center px-8 py-4 bg-white text-[#1A3A3A] rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#F5F5F0] hover:scale-105"
-                    style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
-                  >
-                    Read Our Full Story
-                    <svg className="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+            {/* Left Column - Gemini image adjacent to Dock at the Harbor */}
+            <div 
+              className="relative overflow-hidden bg-white h-full min-h-[140px] sm:min-h-[180px] lg:min-h-[240px] rounded-t-3xl sm:rounded-t-none sm:rounded-l-3xl sm:rounded-r-none lg:rounded-l-3xl lg:rounded-r-none lg:col-span-2"
+            >
+              <img 
+                src="/images/beach.webp" 
+                alt="Coastal beach scene" 
+                className="w-full h-[160px] sm:h-[200px] lg:h-full object-cover"
+              />
             </div>
 
             {/* Right Column - Newsletter Signup */}
-            <div className="bg-white rounded-3xl p-16 relative overflow-hidden">
+            <div id="dock-harbor" className="bg-white rounded-b-3xl sm:rounded-b-none sm:rounded-r-3xl sm:rounded-l-none lg:rounded-r-3xl lg:rounded-l-none px-6 sm:px-8 lg:px-10 py-6 relative overflow-hidden h-full lg:min-h-[240px] flex flex-col lg:col-span-3">
               {/* Background artwork */}
               <div className="absolute inset-0 bg-[url('/Scrimshaw/BOUY.webp')] bg-contain bg-no-repeat bg-right-bottom opacity-5"></div>
               
               <div className="relative z-10">
-                <h2 className="text-5xl font-bold text-[#1A3A3A] mb-6 tracking-tight leading-tight" style={{ 
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#1A3A3A] mb-4 sm:mb-6 tracking-tight leading-tight" style={{ 
                   fontFamily: 'var(--font-eb-garamond), serif',
                   fontWeight: 700
                 }}>
                   Dock at the Harbor
                 </h2>
                 
-                <p className="text-[#1A3A3A]/90 mb-8 text-xl leading-relaxed" style={{ 
-                  fontFamily: 'var(--font-eb-garamond), serif',
-                  fontWeight: 400
-                }}>
+                <p className="text-[#1A3A3A]/90 mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed body-copy">
                   Join our coastal community and be the first to know about new releases, exclusive offers, and stories from the harbor.
                 </p>
                 
                 {/* Newsletter Form */}
-                <div className="space-y-6 mb-8">
+                <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                   <div className="flex flex-col sm:flex-row gap-4">
                     <input
                       type="text"
@@ -279,7 +237,7 @@ export default function HeroSection() {
                     />
                   </div>
                   
-                  <button className="w-full px-8 py-5 bg-[#1A3A3A] text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#1A3A3A]/90 hover:scale-[1.02] active:scale-98" style={{ 
+                  <button className="w-full px-6 sm:px-8 py-4 sm:py-5 bg-[#1A3A3A] text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-[#1A3A3A]/90 border-2 border-[#7b8ca6]/30" style={{ 
                     fontFamily: 'var(--font-eb-garamond), serif'
                   }}>
                     Subscribe to the Harbor
@@ -293,6 +251,47 @@ export default function HeroSection() {
               </div>
             </div>
 
+          </div>
+
+          {/* Our Story moved below the two-column grid */}
+          <div className="mt-10 lg:mt-16">
+            <div className="bg-[#1A3A3A] rounded-3xl p-6 sm:p-10 lg:p-16 text-white relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('/Scrimshaw/artwork-02.webp')] bg-cover bg-center opacity-10"></div>
+              <div className="relative z-10">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 sm:mb-7 lg:mb-8 tracking-tight leading-tight" style={{ 
+                  fontFamily: 'var(--font-eb-garamond), serif',
+                  fontWeight: 700
+                }}>
+                  Our Story
+                </h2>
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg leading-relaxed body-copy">
+                  <p>
+                    Born from the rugged beauty of the Pacific Northwest coast, Cold Harbor Coffee emerged from a simple truth: 
+                    morning coffee needs to be as bold as the sea that shapes our shores.
+                  </p>
+                  <p>
+                    We're not just coffee roasters—we're morning people. The kind who know that 4 AM fog has a taste, 
+                    that dock pilings creak in harmony with the tide, and that the best conversations happen before sunrise.
+                  </p>
+                  <p>
+                    Every bean we roast carries the weight of coastal tradition, every blend crafted to cut through 
+                    the morning chill and wake you up like a foghorn cutting through the mist.
+                  </p>
+                </div>
+                <div className="mt-10">
+                  <a 
+                    href="/about" 
+                    className="inline-flex items-center px-8 py-4 bg-white text-[#1A3A3A] rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#F5F5F0] hover:scale-105 border-2 border-[#7b8ca6]/40"
+                    style={{ fontFamily: 'var(--font-eb-garamond), serif' }}
+                  >
+                    Read Our Full Story
+                    <svg className="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
